@@ -146,7 +146,7 @@ intMax = -2147483648;
 **基本数据类型的转换:** 自动类型转换/强制类型转换  
 ![](https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528024696618&di=aa0026e42caaa358d23d563dbfe91ea1&imgtype=0&src=http%3A%2F%2Fimage.bubuko.com%2Finfo%2F201804%2F20180415103312146279.png)  
 
-</br>
+
 `System.out.println(‘A’ + 1);`   
 ‘A’是char类型的自动转换为int类型，所以输出值为66；
 
