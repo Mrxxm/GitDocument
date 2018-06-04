@@ -1,4 +1,4 @@
 # 文档
-### **java java基础**
+### **Java Java基础**
 
 ### **Linux Linux**
