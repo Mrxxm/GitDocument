@@ -4,10 +4,10 @@
 
 ---
 
-* 显示：*(快捷键command + shift + .)*
+* 显示：*(快捷键command + shift + .)*  
 `$ defaults write com.apple.finder AppleShowAllFiles -bool true`
 
-* 隐藏：*(快捷键command + shift + .)*
+* 隐藏：*(快捷键command + shift + .)*  
 `$ defaults write com.apple.finder AppleShowAllFiles -bool false` 
 
 * 创建txt文件   
@@ -23,8 +23,8 @@
 * **列出文件**    
 `$ ls 参数 目录名 `    
    
-* 看看驱动目录下有什么
-`$ ls /System/Library/Extensions`  
+* 看看驱动目录下有什么  
+`$ ls /System/Library/Extensions`    
 *参数 -w 显示中文，-l 详细信息， -a 包括隐藏文件*
 
 * **转换目录**       
@@ -39,35 +39,35 @@
 * 在驱动目录下建一个备份目录 backup       
 `$ mkdir /System/Library/Extensions/backup`
 
-* 在桌面上建一个备份目录 backup
+* 在桌面上建一个备份目录 backup  
 `$ mkdir /User/用户名/Desktop/backup`
 
 * **拷贝文件**  
 `$ cp 参数 源文件 目标文件`    
 
 * 想把桌面的Natit.kext 拷贝到驱动目录中  
-`$ cp -R /User/用户名/Desktop/Natit.kext /System/Library/Extensions`
+`$ cp -R /User/用户名/Desktop/Natit.kext /System/Library/Extensions`  
 *参数R表示对目录进行递归操作，kext在图形界面下看起来是个文件，实际上是个文件夹。*
 
-* 把驱动目录下的所有文件备份到桌面backup
+* 把驱动目录下的所有文件备份到桌面backup  
 `$ cp -R /System/Library/Extensions/* /User/用户名/Desktop/backup`
 
 * **删除文件**  
 `$ rm 参数 文件`
 
 * 想删除驱动的缓存  
-`$ rm -rf /System/Library/Extensions.kextcache`
-`$ rm -rf /System/Library/Extensions.mkext`  
+`$ rm -rf /System/Library/Extensions.kextcache`  
+`$ rm -rf /System/Library/Extensions.mkext`    
 *参数－rf 表示递归和强制，千万要小心使用，如果执行了 rm -rf / 你的系统就全没了*
 
 * **移动文件**  
 `$ mv 文件`   
 
-* 想把AppleHDA.Kext 移到桌面
-`$ mv /System/Library/Extensions/AppleHDA.kext /User/用户名/Desktop`
+* 想把AppleHDA.Kext 移到桌面  
+`$ mv /System/Library/Extensions/AppleHDA.kext /User/用户名/Desktop`  
 
-* 想把AppleHDA.Kext 移到备份目录中  
-`$ mv /System/Library/Extensions/AppleHDA.kext /System/Library/Extensions/backup`
+* 想把AppleHDA.Kext 移到备份目录中    
+`$ mv /System/Library/Extensions/AppleHDA.kext /System/Library/Extensions/backup`  
 
 * **文本编辑**  
 `$ nano 文件名`
