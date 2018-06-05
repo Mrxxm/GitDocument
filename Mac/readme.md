@@ -166,3 +166,127 @@ stty           | 显示或重置控制键定义       |  stty -a   |
 du           | 查询磁盘使用情况        |  du -k subdir   |
 df /tmp           | 显示文件系统的总空间和可用空间       |     |
 w           | 显示当前系统活动的总信息       |    |
+
+
+## Mac 开启crontab定时任务调试
+
+cron来源于希腊单词chronos（意为“时间”），是linux系统下一个自动执行指定任务的程序。例如，你想在每晚睡觉期间创建某些文件或文件夹的备份，就可以用cron来自动执行。
+
+**Mac使用开启crontab**
+  
+* 查看 crontab 是否启动    
+`$ sudo launchctl list | grep cron`  
+
+* 检查需要的文件  
+
+```
+$ LaunchAgents  ll /etc/crontab
+ls: /etc/crontab: No such file or directory  #表示没有这个文件，需要创建一个
+```
+
+* 创建文件  
+`$ sudo touch /etc/crontab`  
+
+**crontab服务的重启关闭，开启**
+
+* mac 
+
+```
+$ sudo /usr/sbin/cron start
+$ sudo /usr/sbin/cron restart
+$ sudo /usr/sbin/cron stop
+```
+
+* ubuntu
+
+```
+$ sudo /etc/init.d/cron start
+$ sudo /etc/init.d/cron stop
+$ sudo /etc/init.d/cron restart
+```
+
+* linux
+
+```
+# /sbin/service crond start
+# /sbin/service crond stop
+# /sbin/service crond restart
+# /sbin/service crond reload
+```
+
+* 查看当前用户的cron配置  
+`$ sudo crontab -l `
+     
+* 编辑当前用户的cron配置  
+`$ sudo crontab -e `
+     
+* 删除当前用户的cron配置  
+`$ sudo crontab -r`
+
+每分钟输出当前时间到time.txt上  
+`*/1 * * * * /bin/date >> /User/Username(你的用户名)/time.txt`
+
+**crontab的文件格式**  
+
+* 第1列分钟0～59
+
+* 第2列小时0～23（0表示子夜）
+
+* 第3列日1～31
+
+* 第4列月1～12
+
+* 第5列星期0～7（0和7表示星期天）
+
+* 第6列要运行的命令
+
+## 终端 输入中文问题
+
+* mac
+ 
+```
+$ locale
+LANG="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_CTYPE="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_ALL="en_US.UTF-8"
+```
+
+**输入后重启**
+
+```
+$ export LC_ALL=en_US.UTF-8
+$ export LANG=en_US.UTF-8
+```
+
+* linux
+
+```
+# locale
+LANG=en_US.UTF-8
+LANGUAGE=
+LC_CTYPE="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_PAPER="en_US.UTF-8"
+LC_NAME="en_US.UTF-8"
+LC_ADDRESS="en_US.UTF-8"
+LC_TELEPHONE="en_US.UTF-8"
+LC_MEASUREMENT="en_US.UTF-8"
+LC_IDENTIFICATION="en_US.UTF-8"
+LC_ALL=en_US.UTF-8
+```
+
+**输入后重启**
+
+```
+# export LC_ALL=en_US.UTF-8
+# export LANG=en_US.UTF-8
+```
