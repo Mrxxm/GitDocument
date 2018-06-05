@@ -178,7 +178,7 @@ cron来源于希腊单词chronos（意为“时间”），是linux系统下一�
 `$ sudo launchctl list | grep cron`  
 
 * 检查需要的文件  
-
+* 
 ```
 $ LaunchAgents  ll /etc/crontab
 ls: /etc/crontab: No such file or directory  #表示没有这个文件，需要创建一个
