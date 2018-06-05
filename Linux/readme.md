@@ -410,3 +410,103 @@ p 粘贴
 
 同上，但忽略大小写  
 `# find . -iregex ".*\(\.txt\|\.pdf\)$"`
+
+## SSH配置—Linux下实现免密码登录
+
+**本地登远程服务器**
+
+```
+$ ssh root@47.93.233.9
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+Welcome to Alibaba Cloud Elastic Compute Service !
+
+Last login: Tue Jun  5 19:43:47 2018 from 112.10.92.86
+root@growthcoder:~# 
+
+```
+
+**下面开始我们的配置步骤**
+
+1.本地生成秘钥
+
+通过执行命令来生成我们需要的密钥  
+`$ ssh-keygen -t rsa`
+
+```
+$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/xuxiaomeng/.ssh/id_rsa): 
+```
+
+执行上面的命令时，我们直接按三次回车，之后会在用户的根目录下生成一个 .ssh 的文件夹，我们进入该文件夹下面并查看有哪些内容。
+
+```
+$ cd ~/.ssh
+$ ll
+total 24
+-rw-------  1 xuxiaomeng  staff   1.6K Mar 12 10:13 id_rsa
+-rw-r--r--  1 xuxiaomeng  staff   403B Mar 12 10:13 id_rsa.pub
+-rw-r--r--  1 xuxiaomeng  staff   896B Apr 16 10:40 known_hosts
+```
+
+可能存在四个文件  
+*authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。*  
+*id_rsa: 生成的私钥文件。*  
+*id_rsa.pub: 生成的公钥文件。*  
+*known_hosts: 已知的主机公钥清单。*  
+
+2.远程密钥登录
+
+三种方式
+
+一、是通过 ssh-copy-id 命令  
+通过 ssh-copy-id 命令设置。最后一个参数是我们要免密钥登录的服务器 ip 地址。
+
+```
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub root@47.93.233.9
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/Users/xuxiaomeng/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@47.93.233.9's password: 
+Permission denied, please try again.
+root@47.93.233.9's password: 
+
+Number of key(s) added:        1
+
+Now try logging into the machine, with:   "ssh 'root@47.93.233.9'"
+and check to make sure that only the key(s) you wanted were added.
+```
+
+*二、是通过 scp 命令*   
+*三、是手工复制*  
+
+以上步骤，我们就完成了免密钥登录，下面我们来进行验证。
+
+```
+$ ssh root@47.93.233.9
+Welcome to Ubuntu 16.04.2 LTS (GNU/Linux 4.4.0-62-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+Welcome to Alibaba Cloud Elastic Compute Service !
+
+Last login: Tue Jun  5 19:43:47 2018 from 112.10.92.86
+root@growthcoder:~# 
+
+```
+
+**原理**
+
+* ssh 客户端向 ssh 服务器端发送连接请求。  
+* ssh 服务器端发送一个随机的信息。  
+* ssh 客户端使用本地的私钥对服务器端发送过来的信息进行加密。  
+* ssh 客户端向服务器端发送加密过后的信息。  
+* ssh 服务器端使用公钥对该信息进行解密。  
+* 若解密之后的信息和之前发送的信息匹配，则信任客户端，否则不信任。  
