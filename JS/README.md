@@ -7,6 +7,6 @@
 **语言规范**
 
 ```js
-<script type=“text/javascript”></script>
-<script type=“text/javascript” src=“js文件"></script>
+<script type="text/javascript"></script>
+<script type="text/javascript" src="js文件"></script>
 ```
