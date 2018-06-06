@@ -287,3 +287,14 @@ LC_ALL=en_US.UTF-8
 # export LC_ALL=en_US.UTF-8
 # export LANG=en_US.UTF-8
 ```
+
+## Shell 切换
+
+* 切换bash  
+`$ chsh -s /bin/bash`    
+重启
+
+* 切换zsh  
+`$ chsh -s /bin/zsh`  
+重启
+
