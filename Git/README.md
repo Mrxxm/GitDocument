@@ -111,7 +111,7 @@
 
 ![](https://cdn.liaoxuefeng.com/cdn/files/attachments/001384907702917346729e9afbf4127b6dfbae9207af016000/0)
 
-创建一个新仓库
+create new repository
 
 ```
 $ git init
@@ -131,13 +131,47 @@ $ git push -u origin master
 5.git pull origin master 把文件从远程仓库拉下来
 ```
 
-取消add和取消commit
+cancel add
 
 ```
-
+$ git status
+$ git add .
+$ git reset HEAD xxx 取消暂存
 ```
 
+cancel commit
 
+```
+$ git status
+$ git add .
+$ git commit -m "..."
+$ git log
+$ git reset --hard (commit id)  回滚到具体某个版本
+$ 需要注意的是一旦回滚到之前某个版本，其之后的版本将消失
+```
 
+tag
 
+```
+$ git checkout develop
+$ git pull
+$ git tag                     查看已有tag
+$ git tag 1.1.1
+$ git push origin 1.1.1
+```
+
+stash
+
+```
+$ git stash 
+$ git stash pop
+$ git stash list
+$ git stash drop xxx
+```
+
+pull origin branch
+
+```
+$ git pull origin <branch>
+```
 
