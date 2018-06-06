@@ -103,7 +103,7 @@
 或  
 `$ git checkout .`
 
-* 放弃某个文件的所有本地修改
+* 放弃某个文件的所有本地修改  
 `$ git checkout HEAD <file>`
 
 
