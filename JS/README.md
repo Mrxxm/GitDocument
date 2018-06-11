@@ -450,8 +450,104 @@ childNodes 父节点获取内部全部的子节点信息
 **属性操作：**  
 属性值操作：
 
-`node.属性`  
+`1.node.属性`  
+`2.getAttribute()`  
+`3.setAttribute()`  
 
 ```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>属性值操作</h2>
+	<input type="text" name="name" id="username" value="Tom" class="input-name" weight="155"/></br>
+	<input type="button" value="获取" onclick="getValue()">
+	<input type="button" value="设置" onclick="setValue()">
+</body>
+</html>
+
+<script type="text/javascript">
+	
+	var node = document.getElementsByTagName('input')[0];
+	function getValue() {
+		console.log(node.type);                   // text
+		console.log(node.name);                   // name
+		console.log(node.value);                  // Tom
+		console.log(node.class);                  // undefined
+		console.log(node.className);              // input-name
+		console.log(node.weight);                 // undefined
+		console.log(node.getAttribute('weight')); // 155
+	}
+	function setValue() {
+		node.name = "Tomcat";
+		node.className = "input-name-set";
+		node.weight = "145";                      // 无效
+		node.setAttribute('weight', '140');       // 有效
+	}
+	
+</script>
 
 ```
+
+属性节点操作：  
+
+```
+var attrList = 元素节点对象.attributes; 
+返回对应节点内部所有属性节点信息 ，数组列表形式。
+
+attrList.属性名称 // 获取具体属性节点
+```
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>属性值操作</h2>
+	<input type="text" name="name" id="username" value="Tom" class="input-name" weight="155"/></br>
+</body>
+</html>
+
+<script type="text/javascript">
+	
+	var attributesList = document.getElementsByTagName('input')[0].attributes;
+	console.log(attributesList);
+	console.log(attributesList.type);            // 属性节点
+	console.log(attributesList.name);            // 属性节点
+	console.log(attributesList.value);           // 属性节点
+	console.log(attributesList.value.nodeValue); // 文本节点
+	
+	/*
+	*
+	* 节点.nodeType:
+	* 1 ---> 元素节点 
+	* 2 ---> 属性节点
+	* 3 ---> 文本节点
+	* 4 ---> 文档节点
+	*/
+	console.log(attributesList.value.nodeType); // 2
+</script>
+```
+
+**节点追加和创建：**  
+节点创建：
+
+```  
+ 元素节点：document.createElement(tag标签);
+ 文本节点：document.createTextNode(文本内容);
+ 属性设置：node.setAttribute(名称, 值);
+```
+
+节点追加：  
+
+```
+ 父节点.appendChild(子节点)；
+ 父节点.insertBefore(newNode, oldNode)；// newNode放在oldNode前边
+ 父节点.replaceChild(newNode, oldNode); // newNode替换oldNode位置
+```
+
+**TODO...**
