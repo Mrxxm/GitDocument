@@ -205,3 +205,97 @@ js中return还可以返回一个function函数。
 </script>
 ```
   
+**全局变量和局部变量：**  
+**php:** 函数外部声明的变量是全局变量。函数内部也能声明全局变量使用global关键字描述 global $subject = "php";  
+函数调用后执行。  
+**js:** 函数内部声明全局变量 前不加var字段。  
+函数调用后执行。
+
+```js
+<script type="text/javascript">
+
+	function f1() {
+		subject = "js";
+	}
+	f1();
+	console.log(subject);
+
+</script>
+```
+
+数组三种声明方式：
+
+```js
+<script type="text/javascript">
+
+	var arr1 = [1, 2, 3];
+	var arr2 = new Array(1, 2, 3);
+	var arr3 = new Array();
+	arr3[0] = 1;
+	arr3[1] = 2;
+	arr3['city'] = "hangzhou";
+	console.log(arr1, arr2, arr3);
+	console.log(arr3[0], arr3[1], arr3.city, arr3['city']);
+
+</script>
+```
+
+数组长度：数组最大下标数 + 1  
+like是成员属性，不是数组长度
+
+```js
+<script type="text/javascript">
+
+	var animal1 = new Array('dog', 'pig', 'cat', 'duck');
+	animal1[4] = "tiger";
+	animal1['like'] = "beautiful";
+	console.log(animal1.length);  // 5
+
+	var animal2 = new Array('dog', 'pig', 'cat', 'duck');
+	animal2[4] = "tiger";
+	animal2[19] = "ele";
+	console.log(animal2.length);  // 20
+
+</script>
+```
+
+数组常用方法：
+
+```js
+<script type="text/javascript">
+
+	var animal1 = new Array('dog', 'pig', 'cat', 'duck');
+	/*
+		push()    pop()
+		unshift() shift()
+		indexOf() lastIndexOf()
+	*/
+
+	console.log(animal1.indexOf('dog'));     // 0
+	console.log(animal1.lastIndexOf('cat')); // 2
+
+</script>
+```
+
+**字符串操作：**  
+
+eval用法：  
+eval(参数字符串)  
+主要用于接收接口的字符串信息 变成实体信息  
+
+```js
+<script type="text/javascript">
+
+	// eval("") 将内部参数字符串当成表达式 在上下文执行
+	var a = 10;
+	var b = 20;
+	console.log(a + b);          // 30
+	console.log("a + b");        // a + b
+	console.log(eval("a + b"));  // 30
+	console.log(alert(1));       // undefined
+	console.log(eval(alert(1)))  // undefined
+
+</script>
+```
+
+## DOM
