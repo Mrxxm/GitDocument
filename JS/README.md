@@ -550,4 +550,149 @@ attrList.属性名称 // 获取具体属性节点
  父节点.replaceChild(newNode, oldNode); // newNode替换oldNode位置
 ```
 
-**TODO...**
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>节点创建和追加</h2>
+</body>
+</html>
+
+<script type="text/javascript">
+	/*
+	* <ul>
+	*	<li province="beijing">北京</li>
+	*	<li province="jiangsu">南京</li>
+	*   <li province="zhejiang">杭州</li>
+	* </ul>
+	*/
+	var ul = document.createElement('ul');
+	var provinces = ['beijing', 'jiangsu', 'zhejiang'];
+	var citys = ['北京', '南京', '杭州'];
+	for(var k in citys) {
+		// 创建li的元素节点
+		var li = document.createElement('li');
+		// 创建li的文本节点
+		var city = document.createTextNode(citys[k]);
+		// 给li节点设置属性
+		li.setAttribute('province', provinces[k]);
+		// 给li节点追加文本节点关系
+		li.appendChild(city);
+		// 给ul节点追加li节点关系
+		ul.appendChild(li);
+	}
+	// 给body追加ul节点
+	var body = document.getElementsByTagName('body')[0];
+	body.appendChild(ul);
+</script>
+```
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>节点创建和追加</h2>
+	<ul>
+		<li province="beijing">北京</li>
+		<li province="jiangsu">南京</li>
+	    <li province="zhejiang">杭州</li>
+	</ul>
+	<input type="button" value="追加" onclick="append()" />
+</body>
+</html>
+
+<script type="text/javascript">
+
+	// 追加<li province="guangzhou">广州</li>
+	function append() {
+		var ul = document.getElementsByTagName('ul')[0];
+		// 创建li的元素节点
+		var li = document.createElement('li');
+		// 创建li的文本节点
+		var city = document.createTextNode('广州');
+		// 给li节点设置属性
+		li.setAttribute('province', 'guangzhou');
+		// 给li节点追加文本节点关系
+		li.appendChild(city);
+		// 给ul节点追加li节点关系
+		ul.appendChild(li);
+		ul.insertBefore(li, ul.firstChild);
+	}
+
+</script>
+```
+
+**节点复制和删除：**  
+
+```
+被复制的节点.cloneNode(true/false);
+true:本身节点 + 内部节点
+false:本身节点
+```
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>节点复制和删除</h2>
+	<ul id="south">
+		<li province="jiangsu" id="js">南京</li>
+	    <li province="zhejiang" id="zj">杭州</li>
+	    <li province="guangzhou" id="gz">广州</li>
+	</ul>
+	<ul id="north">
+		<li province="beijing" id="bj">北京</li>
+	</ul>
+	<input type="button" value="复制追加" onclick="copy()" />
+	<input type="button" value="删除追加" onclick="delet()" />
+</body>
+</html>
+
+<script type="text/javascript">
+
+	function copy() {
+		var bj = document.getElementById('bj');
+		var north = document.getElementById('north');
+		var copyBj = bj.cloneNode(true);
+		north.appendChild(copyBj);
+	}
+
+	function delet() {
+		var lies = document.getElementsByTagName('li');
+		var length = lies.length;
+		var li = document.getElementsByTagName('li')[length - 1];
+		li.parentNode.removeChild(li);
+	}
+
+</script>
+```
+
+**dom对css样式操作：**  
+
+```
+1.获取样式  
+元素节点.style.css样式名称  
+divnode.style.width;  
+
+2.设置css样式（有则修改，没有则添加）  
+元素节点.style.css样式名称 = 值;  
+divnode.style.width = “500px”;
+
+注意：
+1.dom操作操作只能操作“行内样式” (css样式分为行内 内部 外部)
+2.js变量命名不予许有中横杆。
+3.修改样式有则修改 无则添加 修改完后都成为行内样式。
+```
+
+TODO...
+
+## 事件操作
