@@ -299,3 +299,159 @@ eval(参数字符串)
 ```
 
 ## DOM
+
+**DOM 文档 对象 模型**    
+**php：** php语言和xml/html标签之间的桥梁  
+**js：** js语言和xml/html标签之间的桥梁  
+文档节点、元素节点、文本节点、属性节点、注释节点 
+
+**元素节点的获取：**   
+1.document.getElementById(id属性值)  
+2.document.getElementsByTagName(tag标签名称) 返回集合列表（数组）  
+3.document.getElementsByName(name属性值) 不推荐使用  
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>获取元素节点</h2>
+	<input type="text" name="name" id="username" value="Tom" /></br>
+	<input type="text" name="mail" id="usermail" value="362190221@163.com" /></br>
+	<input type="text" name="tele" id="usertele" value="13777899876" /></br>
+	<input type="button" value="触发" onclick="f()">
+</body>
+</html>
+
+<script type="text/javascript">
+	// 1
+	var usermail = document.getElementById('usermail');
+	console.log(usermail);   // <input type="text" name="mail" id="usermail" value="362190221@163.com">
+
+	// 2 返回集合对象HTMLCollection
+	var inputs = document.getElementsByTagName('input');
+	console.log(inputs);     // HTMLCollection(4) [input#username, input#usermail, input#usertele, input, username: input#username, name: input#username, usermail: input#usermail, mail: input#usermail, usertele: input#usertele, …]
+
+	var h2 = document.getElementsByTagName('h2');
+	console.log(h2);         // HTMLCollection [h2]
+	console.log(h2[0]);      // <h2>获取元素节点</h2>
+	console.log(h2.item(0)); // <h2>获取元素节点</h2>
+
+	// 3 返回集合对象NodeList 不推荐使用
+	var names = document.getElementsByName('name');
+	console.log(names);      // NodeList [input#username]
+
+</script>
+```
+
+**文本节点获取：** 
+
+子节点获取：
+firstChild / lastChild
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>获取子节点与文本节点</h2>
+</body>
+</html>
+
+<script type="text/javascript">
+	// 1 元素节点对象.firstChild/lastChild
+	var textObj = document.getElementsByTagName('h2')[0];
+	console.log(textObj.firstChild);           // "获取文本节点"
+
+	// 通过文本节点，获取其对应的文本信息
+	console.log(textObj.firstChild.nodeValue); // 获取文本节点
+
+</script>
+``` 
+
+兄弟节点获取：  
+nextSibling 获得下一个兄弟节点  
+previousSibling 获得上一个兄弟节点  
+childNodes 父节点获取内部全部的子节点信息  
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>获取子节点与兄弟节点</h2>
+	<ul>
+		<li>北京</li>
+		<li>南京</li>
+		<li>杭州</li>
+	</ul>
+</body>
+</html>
+
+<script type="text/javascript">
+	// 1 元素节点对象.firstChild/lastChild
+	var textObj = document.getElementsByTagName('h2')[0];
+	console.log(textObj.firstChild);                      // "获取子节点与兄弟节点"
+	// 通过文本节点，获取其对应的文本信息
+	console.log(textObj.firstChild.nodeValue);            // 获取子节点与兄弟节点
+
+	// 2 childNodes:父节点获取内部全部子节点信息
+	var ul = document.getElementsByTagName('ul')[0];      // 具体元素节点对象
+	console.log(ul.childNodes);                           // NodeList(7) [text, li, text, li, text, li, text]
+	// 上一个、下一个兄弟节点
+	var nanjing = document.getElementsByTagName('li')[1];
+	console.log(nanjing);                                 // 节点对象 <li>南京</li>
+	console.log(nanjing.firstChild);                      // 文本节点 "南京"
+	console.log(nanjing.firstChild.nodeValue);            // 文本信息 南京
+	// nextSibling previousSibling 会先找空白节点
+	console.log(nanjing.previousSibling);                 // #text
+	console.log(nanjing.previousSibling.previousSibling); // 北京 节点对象 <li>北京</li>
+	console.log(nanjing.nextSibling.nextSibling);         // 杭州 节点对象 <li>杭州</li>
+</script>
+```
+
+父节点获取：  
+`节点.parentNode`
+
+```js
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>获取子节点与兄弟节点</h2>
+	<ul>
+		<li>北京</li>
+		<li>南京</li>
+		<li>杭州</li>
+	</ul>
+</body>
+</html>
+
+<script type="text/javascript">
+	// node.parentNode
+	var nanjing = document.getElementsByTagName('li')[1];
+	console.log(nanjing.firstChild);  								   // 子节点 "南京"
+	console.log(nanjing.parentNode);                                   // 父节点 <ul>...</ul>   
+	console.log(nanjing.parentNode.parentNode);                        // 父节点 <body>...</body>
+	console.log(nanjing.parentNode.parentNode.parentNode);             // 父节点 <html>...</html>
+	console.log(nanjing.parentNode.parentNode.parentNode.parentNode);  // 父节点 #document
+	
+</script>
+```
+
+**属性操作：**  
+属性值操作：
+
+`node.属性`  
+
+```js
+
+```
