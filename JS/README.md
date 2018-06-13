@@ -669,6 +669,9 @@ false:本身节点
 	function delet() {
 		var lies = document.getElementsByTagName('li');
 		var length = lies.length;
+		if (length == 4) {
+			return;
+		}
 		var li = document.getElementsByTagName('li')[length - 1];
 		li.parentNode.removeChild(li);
 	}
