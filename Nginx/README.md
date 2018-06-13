@@ -222,5 +222,419 @@ root@VM_15_196_centos sbin]# curl icanhazip.com
 启动nginx服务  
 `# /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf`
 
+
+重启nginx服务  
+`# /usr/local/nginx/sbin/nginx -s reload`
+
+## nginx.conf
+
+```
+#设置用户(nobody低权限用户，安全)
+#user  nobody;
+
+#工作衍生进程数(数字代表cpu的核数，通常设置为核数或核数两倍)
+worker_processes  1;
+
+#设置错误文件存放路径(错误、notice、info会记录到相应文件)
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#设置pid存放路径(pid是控制系统中重要文件)
+#pid        logs/nginx.pid;
+
+#设置最大连接数
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+	#开启gzip压缩
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+		#设置字符
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1;
+        #}
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        #location ~ \.php$ {
+        #    root           html;
+        #    fastcgi_pass   127.0.0.1:9000;
+        #    fastcgi_index  index.php;
+        #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        #    include        fastcgi_params;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        #location ~ /\.ht {
+        #    deny  all;
+        #}
+    }
+
+
+    # another virtual host using mix of IP-, name-, and port-based configuration
+    #
+    #server {
+    #    listen       8000;
+    #    listen       somename:8080;
+    #    server_name  somename  alias  another.alias;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #
+    #}
+}
+
+```
+
+必需项归类
+
+```
+worker_processes  1;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+	server {
+	
+	}
+	
+	server {
+	
+	}
+}
+```
+
+## 配置虚拟主机
+
+```
+[root@VM_15_196_centos nginx]# pwd
+/usr/local/nginx
+[root@VM_15_196_centos nginx]# cd conf/
+[root@VM_15_196_centos conf]# vim nginx.conf
+```
+
+在nginx.conf文件`http{}`配置加入    
+`include sites-enabled/*;`
+
+vi状态显示行号  
+`:set nu`
+
+```
+ 96     # HTTPS server
+ 97     #
+ 98     #server {
+ 99     #    listen       443 ssl;
+100     #    server_name  localhost;
+101 
+102     #    ssl_certificate      cert.pem;
+103     #    ssl_certificate_key  cert.key;
+104 
+105     #    ssl_session_cache    shared:SSL:1m;
+106     #    ssl_session_timeout  5m;
+107 
+108     #    ssl_ciphers  HIGH:!aNULL:!MD5;
+109     #    ssl_prefer_server_ciphers  on;
+110 
+111     #    location / {
+112     #        root   html;
+113     #        index  index.html index.htm;
+114     #    }
+115     #
+116     #}
+117     include sites-enabled/*;
+118 }
+
+```
+
+新建sites-enabled文件夹并新建server、blog配置
+
+```
+[root@VM_15_196_centos conf]# mkdir sites-enabled
+[root@VM_15_196_centos conf]# cd sites-enabled/
+[root@VM_15_196_centos conf]# touch server
+[root@VM_15_196_centos conf]# touch blog
+[root@VM_15_196_centos sites-enabled]# ll
+total 8
+-rw-r--r-- 1 root root 200 Jun 13 12:47 blog
+-rw-r--r-- 1 root root 201 Jun 13 12:46 server
+```
+
+blog
+
+```
+server {
+	listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+
+        location / {
+            index  index.html index.htm index.php;
+            root html/blog;
+        }
+}
+```
+server
+
+```
+server {
+	listen       80;
+        server_name  www.kenrou.cn;
+        charset utf-8;
+
+        location / {
+            index  index.html index.htm index.php;
+            root html/server;
+        }
+}
+```
+location对应html目录下相应的文件
+
+```
+[root@VM_15_196_centos html]# pwd
+/usr/local/nginx/html
+[root@VM_15_196_centos html]# ll
+total 16
+-rw-r--r-- 1 root root  537 Jun 13 10:47 50x.html
+drwxr-xr-x 2 root root 4096 Jun 13 13:06 blog
+-rw-r--r-- 1 root root  612 Jun 13 10:47 index.html
+drwxr-xr-x 2 root root 4096 Jun 13 12:51 server
+[root@VM_15_196_centos html]# cd blog
+[root@VM_15_196_centos blog]# ll
+total 4
+-rw-r--r-- 1 root root 46 Jun 13 13:06 index.html
+[root@VM_15_196_centos blog]# cd ../server/
+[root@VM_15_196_centos server]# ll
+total 4
+-rw-r--r-- 1 root root 927 Jun 13 12:51 index.html
+[root@VM_15_196_centos server]# 
+```
+
+重启nginx服务  
+`# /usr/local/nginx/sbin/nginx -s reload`
+
+结果显示(分别显示server目录下的index.html和blog目录下的index.html)
+
+```
+[root@VM_15_196_centos conf]# curl www.kenrou.cn
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2>节点复制和删除</h2>
+···
+```
+
+```
+[root@VM_15_196_centos conf]# curl blog.kenrou.cn
+<a href="https://github.com/Mrxxm">github</a>
+
+```
+
+## 日志文件配置
+nginx.conf文件片段
+
+```
+ 17 http {
+ 18     include       mime.types;
+ 19     default_type  application/octet-stream;
+ 20 
+ 21     #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+ 22     #                  '$status $body_bytes_sent "$http_referer" '
+ 23     #                  '"$http_user_agent" "$http_x_forwarded_for"';
+ 24 
+ 25     #access_log  logs/access.log  main;
+ 26 
+ 27     sendfile        on;
+ 28     #tcp_nopush     on;
+ 29  
+```
+设置日志文件的格式 **log_format** 
+
+```
+1. $remote_addr              客户端IP地址
+2. $remote_user              客户端用户名
+3. $request                  请求的url(客户访问的网址)
+4. $status                   请求状态
+5. $body_bytes_sent          发送给客户端的字节数(给客户返回数据)
+6. $http_referer             原网页(客户跳转到落地页的上一个网页)
+7. $http_user_agent          客户端浏览器对应信息(浏览器类型及其他信息)
+8. $http_x_forwarded_for     客户端IP地址
+```
+
+日志信息打印
+
+```
+115.199.181.190 - - [13/Jun/2018:16:59:49 +0800] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36"
+```
+
+日志文件存储路径配置 **access_log**
+
+```
+#日志文件完整地址 /usr/local/nginx/logs/access.log
+```
+
+关闭日志文件记录
+
+```
+access_log off;
+```
+
+## 日志文件切割
+
+进入日志目录
+
+```
+[root@VM_15_196_centos nginx]# cd logs/
+[root@VM_15_196_centos logs]# ll
+total 16
+-rw-r--r-- 1 root root 1954 Jun 13 17:03 access.log
+-rw-r--r-- 1 root root 5849 Jun 13 16:56 error.log
+-rw-r--r-- 1 root root    6 Jun 13 11:02 nginx.pid
+```
+
+第一步(将当前日志文件移动到相应文件夹已时间命名)
+
+```
+[root@VM_15_196_centos logs]# mkdir mainLog
+[root@VM_15_196_centos logs]# ll
+total 20
+-rw-r--r-- 1 root root 2112 Jun 13 17:06 access.log
+-rw-r--r-- 1 root root 5849 Jun 13 16:56 error.log
+drwxr-xr-x 2 root root 4096 Jun 13 17:07 mainLog
+-rw-r--r-- 1 root root    6 Jun 13 11:02 nginx.pid
+[root@VM_15_196_centos logs]# mv access.log mainLog/201806131708.log
+```
+
+第二步(开启日志记录)
+
+`# kill -USR1 7825`
+
+```
+[root@VM_15_196_centos logs]# ps -ef|grep nginx
+root      7825     1  0 17:10 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+nobody    7826  7825  0 17:10 ?        00:00:00 nginx: worker process
+root      7830  7468  0 17:10 pts/1    00:00:00 grep --color=auto nginx
+[root@VM_15_196_centos logs]# ll
+total 16
+-rw-r--r-- 1 root root 5849 Jun 13 16:56 error.log
+drwxr-xr-x 2 root root 4096 Jun 13 17:11 mainLog
+-rw-r--r-- 1 root root    5 Jun 13 17:10 nginx.pid
+[root@VM_15_196_centos logs]# kill -USR1 7825
+[root@VM_15_196_centos logs]# ll
+total 16
+-rw-r--r-- 1 nobody root    0 Jun 13 17:11 access.log
+-rw-r--r-- 1 nobody root 5849 Jun 13 16:56 error.log
+drwxr-xr-x 2 root   root 4096 Jun 13 17:11 mainLog
+-rw-r--r-- 1 root   root    5 Jun 13 17:10 nginx.pid
+```
+
+**定时执行脚本实现上面操作**
+
+```
+[root@VM_15_196_centos logs]# touch cutlog.sh
+[root@VM_15_196_centos logs]# vim cutlog.sh 
+```
+cutlog.sh
+
+```
+D=$(date +%Y%m%d%H%M)
+mv /usr/local/nginx/logs/access.log /usr/local/nginx/logs/mainLog/${D}.log
+kill -USR1 $(cat /usr/local/nginx/logs/nginx.pid)
+```
+
+crontab
+
+```
+*/1 * * * * /bin/bash /usr/local/nginx/logs/cutlog.sh
+```
+
+结果
+
+```
+[root@VM_15_196_centos mainLog]# ll
+total 4
+-rw-r--r-- 1 nobody root    0 Jun 13 17:53 201806131754.log
+-rw-r--r-- 1 nobody root    0 Jun 13 17:54 201806131755.log
+-rw-r--r-- 1 nobody root    0 Jun 13 17:55 201806131756.log
+-rw-r--r-- 1 nobody root 1120 Jun 13 17:56 201806131757.log
+```
+
+
+## 缓存和其他配置
+
+
 TODO  
 ···
