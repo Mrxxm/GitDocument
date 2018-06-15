@@ -708,6 +708,28 @@ $ ： 匹配字符串的结束
 
 ## location正则写法
 
+location指令分为两种匹配模式：
+ 
+1> 普通字符串匹配：以=开头或开头无引导字符（～）的规则   
+2> 正则匹配：以～或～*开头表示正则匹配，~*表示正则不区分大小写
+
+匹配规则
+
+```
+当nginx收到一个请求后，会截取请求的URI部份，去搜索所有location指令中定义的URI匹配模式。在server模块中可以定义多个location指令来匹配不同的url请求，多个不同location配置的URI匹配模式，总体的匹配原则是：先匹配普通字符串模式，再匹配正则模式。只识别URI部份，例如请求为：/test/abc/user.do?name=xxxx 
+一个请求过来后，Nginx匹配这个请求的流程如下： 
+1> 先查找是否有=开头的精确匹配，如：location = /test/abc/user.do { … } 
+2> 再查找普通匹配，以 最大前缀 为原则，如有以下两个location，则会匹配后一项 
+* location /test/ { … } 
+* location /test/abc { … } 
+3> 匹配到一个普通格式后，搜索并未结束，而是暂存当前匹配的结果，并继续搜索正则匹配模式 
+4> 所有正则匹配模式location中找到第一个匹配项后，就以此项为最终匹配结果 
+所以正则匹配项匹配规则，受定义的前后顺序影响，但普通匹配模式不会 
+5> 如果未找到正则匹配项，则以3中缓存的结果为最终匹配结果 
+6> 如果一个匹配都没搜索到，则返回404
+```
+![](https://img-blog.csdn.net/20170419232944871?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUm9iZXJ0b0h1YW5n/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 ```
 location  = / {
   # 精确匹配 / ，主机名后面不能带任何字符串
@@ -1062,6 +1084,8 @@ location ~ ^(.+\.php)(.*)$ {
 
 
 Nginx在0.7.31以前是没有`fastcgi_split_path_info`这个指令的，而0.7.x这个版本一直存活了好多年，后面才高歌猛进，导致网上存在大量旧版本通过正则自己设置`PATH_INFO`的方法。
+
+nginx 只是个 Proxy，它只负责根据用户的配置文件，通过 fastcgi_param 指令将参数忠实地传递给 FastCGI Server
 
 由于path_info没有设定，导致url无法获取出错，导致route出错！对于php的很多框架，这个问题都是适用的！
 
