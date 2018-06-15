@@ -595,6 +595,44 @@ location ~.*\.(gif|jpg|jpeg|png)$ {
 
 这样才会先检查/web/wwwroot/static/test.jpg是否存在，不存在就取/web/wwwroot/test.jpg再不存在则返回404 not found
 
+### 实例验证
+
+```
+location / {
+        index app.php;
+        try_files $uri @rewriteapp;
+    }
+
+    location @rewriteapp {
+        rewrite ^(.*)$ /app.php/$1 last;
+    }
+```
+
+实例配置
+
+```
+server {
+        listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+
+        location / {
+            index index.html index.htm;
+            root html/blog;
+
+            try_files $uri @rewriteapp;
+        }
+
+        location @rewriteapp {
+            rewrite ^(.*)$ /index.htm last;
+        }
+
+}
+```
+
+`/usr/local/nginx/sbin/nginx -s reload`
+
+
 ## location
 
 location指令分为两种匹配模式：
