@@ -188,7 +188,7 @@ location匹配
 
 ```
 location  / {
-  # 因为所有的地址都以 / 开头，所以这条规则将匹配到所有请求
+  # 通用匹配，任何未匹配到其它location的请求都会匹配到，相当于switch中的default
   [ configuration ]
 }
 ```
@@ -608,19 +608,18 @@ location / {
     }
 ```
 
-实例配置
+实例配置一
 
 ```
 server {
         listen       80;
         server_name  blog.kenrou.cn;
         charset utf-8;
+        root /usr/local/nginx/html/blog;
 
         location / {
-            index index.html index.htm;
-            root html/blog;
-
-            try_files $uri @rewriteapp;
+        	  index index.html index.htm;
+            try_files $uri @rewriteapp;   
         }
 
         location @rewriteapp {
@@ -630,8 +629,61 @@ server {
 }
 ```
 
-`/usr/local/nginx/sbin/nginx -s reload`
+实例配置二
 
+```
+server {
+        listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+        root /usr/local/nginx/html/blog;
+
+        location / {
+            index index.html index.htm;
+            try_files $uri/ $uri @rewriteapp;
+        }
+
+        location @rewriteapp {
+            rewrite ^(.*)$ /index.htm last;
+        }
+
+}
+```
+
+实例配置三
+
+```
+server {
+        listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+        root /usr/local/nginx/html/blog;
+
+        location / {
+            index index.html index.htm;
+            try_files $uri @rewriteapp;
+        }
+
+        location @rewriteapp {
+            rewrite ^(.*)$ /index.htm/ last;
+        }
+
+        location ~ ^/(index)\.htm(/|$) {
+            index index.html;
+            try_files $uri 300;
+        }
+
+}
+
+```
+
+日志输出
+
+
+```
+"/usr/local/nginx/html/blog300" failed (2: No such file or directory), client: 124.160.104.78, server: blog.kenrou.cn, request: "GET / HTTP/1.1", host: "blog.kenrou.cn"
+
+```
 
 ## location
 

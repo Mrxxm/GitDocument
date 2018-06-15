@@ -1357,5 +1357,47 @@ server {
 }
 ```
 
+```
+server {
+        listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+        root /usr/local/nginx/html/blog;
+
+        location / {
+            rewrite ^(.*)$ /index.html last;
+        }
+
+        location ~ ^/(index)\.html(/|$) {
+            index index.html;
+            try_files $uri 300;
+        }
+
+
+}
+
+```
+
+```
+server {
+        listen       80;
+        server_name  blog.kenrou.cn;
+        charset utf-8;
+        root /usr/local/nginx/html/blog;
+
+        location / {
+            rewrite ^(.*)$ /blog last;
+        }
+
+        location ~ /(blog) {
+            index index.htm;
+            try_files /index.htm 300;
+        }
+
+
+}
+
+```
+
 TODO  
 ···
