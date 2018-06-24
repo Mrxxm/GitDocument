@@ -64,7 +64,7 @@ xml配置
 
 **视图层 Struts2**
 
-```
+```java
 public class BookAction extends ActionSupport implements ModelDriven<Book>{
 
 	private Book book = new Book();
