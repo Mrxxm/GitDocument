@@ -80,3 +80,59 @@ public class BookAction extends ActionSupport implements ModelDriven<Book>{
 	}
 }
 ```
+
+## 环境搭建
+
+**了解的jar包：** 
+
+`struts2-convention-plugin-2.3.15.3.jar` ---struts2的注解开发的jar包  
+
+`struts2-spring-plugin-2.3.15.3.jar` ---struts2用于整合spring的jar包
+
+**Hibernate框架开发的相应的jar：**
+
+`hibernate-distribution-3.6.10.Final\hibernate3.jar`  
+`hibernate-distribution-3.6.10.Final\lib\required\*.jar`  
+`hibernate-distribution-3.6.10.Final\lib\jpa\*.jar`  
+日志记录：    
+
+* slf4j整合log4j的jar包
+
+数据库驱动包：
+
+*  
+
+**spring框架开发的相应的jar：**
+
+IOC:   
+`spring-beans-3.2.0.RELEASE.jar`  
+`spring-context-3.2.0.RELEASE.jar`  
+`spring-core-3.2.0.RELEASE.jar`  
+`spring-expression-3.2.0.RELEASE.jar`  
+`com.springsource.org.apache.log4j-1.2.15.jar` ---日志记录  
+`com.springsource.org.apache.commons-logging-1.1.1.jar` ---进行日志整合  
+AOP:  
+`spring-aop-3.2.0.RELEASE.jar`  
+`spring-aspects-3.2.0.RELEASE.jar`  
+`com.springsource.org.aopalliance-1.0.0.jar`  
+`com.springsource.org.aspect.weaver-1.6.8.RELEASE.jar`  
+事务管理：  
+
+* `spring-tx-3.2.0.RELEASE.jar`  
+* `spring-jdbc-3.2.0.RELEASE.jar`  
+
+整合Hibernate的包：
+
+* `spring-orm-3.2.0.RELEASE.jar`  
+
+整合WEB项目
+
+* `spring-web-3.2.0.RELEASE.jar`  
+
+整合Junit单元测试
+
+* `spring-test-3.2.0.RELEASE.jar`
+
+连接池
+
+* `com.springsrource.com.mchange.v2.c3p0-0.9.1.2`  
