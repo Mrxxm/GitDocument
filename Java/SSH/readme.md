@@ -136,3 +136,101 @@ AOP:
 连接池
 
 * `com.springsrource.com.mchange.v2.c3p0-0.9.1.2`  
+
+**Struts2框架配置文件**
+
+* web.xml --struts2核心过滤器 
+
+```xml
+  <!-- Struts2框架的核心过滤器的配置 -->
+  <filter>
+    <filter-name>struts</filter-name>
+	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+	
+  <filter-mapping>
+	<filter-name>struts</filter-name>
+	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+```
+ 
+* struts.xml --struts2本身配置文件(添加到src目录下)
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+</struts>
+
+```
+
+**Hibernate框架配置文件**
+
+* hibernate.cfg.xml --Hibernate本身配置文件(在ssh整合中该配置文件可以省略)
+* 映射文件
+
+**Spring框架配置文件**
+
+* web.xml --配置核心监听器
+
+```xml
+  <!-- Spring的框架的核心监听器 -->
+  <listener>
+	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <context-param>
+	<param-name>contextConfigLocation</param-name>
+	<param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+```
+
+* applicationContext.xml --本身配置文件(添加到src目录下)
+
+**创建包结构**
+
+```
+cn.xxm.ssh.action
+cn.xxm.ssh.service
+cn.xxm.ssh.dao
+cn.xxm.ssh.domain
+```
+
+**创建实体类**
+
+```java
+package cn.xxm.ssh.domain;
+/**
+ * 商品属性
+ */
+public class Product {
+	private Integer pid;
+	private String pname;
+	private Double price;
+	public Integer getPid() {
+		return pid;
+	}
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}	
+}
+```
+
+## Struts2整合Spring
+
+**创建页面(保存商品)**
