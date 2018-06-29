@@ -183,6 +183,9 @@ const downloadUrl = (url) => {
   let link = document.createElement('a')
   link.href= url;
   link.download = '';
+  // 解决firefox不能下载问题
+  document.body.appendChild(link);
+  link.style.display='none';
   link.click();
 }
 
@@ -518,6 +521,9 @@ const downloadUrl = (url) => {
   let link = document.createElement('a');
   link.href= url;
   link.download = '';
+  // 解决firefox不能下载问题
+  document.body.appendChild(link);
+  link.style.display='none';
   link.click();
 }
 
