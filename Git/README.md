@@ -175,3 +175,19 @@ pull origin branch
 $ git pull origin <branch>
 ```
 
+set remote
+
+```
+# 设置ssh地址
+➜  open git:(develop) git remote set-url origin git@coding.codeages.net:qiqiuyun/platform-site.git
+
+# 显示为ssh地址
+➜  open git:(develop) git remote -v
+origin	git@coding.codeages.net:qiqiuyun/platform-site.git (fetch)
+origin	git@coding.codeages.net:qiqiuyun/platform-site.git (push)
+
+# 显示为http地址
+➜  api git:(develop) ✗ git remote -v
+origin	http://coding.codeages.net/qiqiuyun/api.git (fetch)
+origin	http://coding.codeages.net/qiqiuyun/api.git (push)
+```
