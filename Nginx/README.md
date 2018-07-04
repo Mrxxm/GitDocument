@@ -1356,6 +1356,7 @@ server {
     }
 }
 ```
+匹配index.html
 
 ```
 server {
@@ -1377,6 +1378,7 @@ server {
 }
 
 ```
+匹配index.htm
 
 ```
 server {
@@ -1397,6 +1399,82 @@ server {
 
 }
 
+```
+
+
+
+
+
+## 反向代理
+
+访问自己服务器IP代理到百度
+
+```
+server {
+        listen       80;
+        server_name  118.25.93.119;
+        access_log /usr/local/nginx/logs/proxy-server.access.log;
+        charset utf-8;
+
+        # Gzip Compression
+        gzip on;
+        gzip_comp_level 6;
+        gzip_vary on;
+        gzip_min_length  1000;
+        gzip_proxied any;
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_buffers 16 8k;
+
+        # 反向代理 proxy-server
+        location / {
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host www.baidu.com;
+                proxy_set_header X-NginX-Proxy true;
+                # 代理的地址
+                proxy_pass http://www.baidu.com;
+                proxy_redirect off;
+        }
+}
+
+```
+
+## 负载均衡
+
+```
+upstream proxy-server{
+   # 淘宝
+   server 218.67.61.254  weight=1;
+   # 淘宝
+   server 182.140.245.49 weight=1;
+}
+
+server {
+        listen       80;
+        server_name  118.25.93.119;
+        access_log /usr/local/nginx/logs/proxy-server.access.log;
+        charset utf-8;
+
+        # Gzip Compression
+        gzip on;
+        gzip_comp_level 6;
+        gzip_vary on;
+        gzip_min_length  1000;
+        gzip_proxied any;
+        gzip_types text/plain text/css application/json application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+        gzip_buffers 16 8k;
+
+        # 反向代理 proxy-server
+        location / {
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host www.taobao.com;
+                proxy_set_header X-NginX-Proxy true;
+                # 代理的地址
+                proxy_pass http://proxy-server;
+                proxy_redirect off;
+        }
+}
 ```
 
 TODO  
