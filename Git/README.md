@@ -309,4 +309,40 @@ Mrxxm
 	Hi Mrxxm! You've successfully authenticated, but GitHub does not provide shell access.
 	```
 
+### 恢复小卒子以后遇到的问题并解决
+
+```
+# push报错
+➜  JAVACODE git:(master) ✗ git push
+To https://github.com/Mrxxm/JAVACODE.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/Mrxxm/JAVACODE.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+# 解决方式
+➜  JAVACODE git:(master) ✗ git pull --allow-unrelated-histories 
+remote: Counting objects: 199, done.
+remote: Compressing objects: 100% (130/130), done.
+remote: Total 199 (delta 64), reused 199 (delta 64), pack-reused 0
+Receiving objects: 100% (199/199), 39.25 KiB | 10.00 KiB/s, done.
+Resolving deltas: 100% (64/64), done.
+From https://github.com/Mrxxm/JAVACODE
+ + 85b3bdf...26bd6e4 master     -> origin/master  (forced update)
+Merge made by the 'recursive' strategy.
+
+# 成功push
+➜  JAVACODE git:(master) ✗ git push
+Counting objects: 114, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (71/71), done.
+Writing objects: 100% (114/114), 15.36 KiB | 3.07 MiB/s, done.
+Total 114 (delta 43), reused 79 (delta 38)
+remote: Resolving deltas: 100% (43/43), completed with 8 local objects.
+To https://github.com/Mrxxm/JAVACODE.git
+   26bd6e4..ef7796a  master -> master
+```
 
