@@ -278,6 +278,35 @@ Mrxxm
 	cd ..
 	rm -rf repo.git
 	```
+	
+### github提示Permission denied (publickey)
 
+1. 查看秘钥(默认秘钥为gitlab使用，重新生成github对应秘钥)
+
+	```
+	➜  .ssh ll
+	total 48
+	-rw-r--r--  1 xuxiaomeng  staff    97B Jul 27 09:26 config
+	-rw-------  1 xuxiaomeng  staff   1.6K Jul 26 17:30 github
+	-rw-r--r--  1 xuxiaomeng  staff   398B Jul 26 17:30 github.pub
+	-rw-------  1 xuxiaomeng  staff   1.6K Mar 12 10:13 id_rsa
+	-rw-r--r--  1 xuxiaomeng  staff   403B Mar 12 10:13 id_rsa.pub
+	-rw-r--r--  1 xuxiaomeng  staff   2.7K Jul 23 11:02 known_hosts
+	```
+2. 配置config
+
+	```
+	#github
+	Host github.com
+     HostName github.com
+     User git
+     IdentityFile ~/.ssh/github
+	```
+3. 测试
+
+	```
+	➜  .ssh ssh -T git@github.com
+	Hi Mrxxm! You've successfully authenticated, but GitHub does not provide shell access.
+	```
 
 
