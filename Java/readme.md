@@ -752,7 +752,7 @@ public class MethodBinarySeacher {
 	
 	static void bubbleSort(int[] arr){
 		for(int i = 1; i <= arr.length - 1; i++){
-			for(int j = i; j <= arr.length - i; j++){
+			for(int j = 1; j <= arr.length - i; j++){
 				if(arr[j - 1] > arr[j]){
 					swap(arr, j - 1, j);
 				}
