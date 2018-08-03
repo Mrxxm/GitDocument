@@ -54,7 +54,7 @@ public void testHello() {
 
 ### bean容器初始化
 
-* 基础：两个包
+* 基础：两个包  
 -- org.springframework.beans  
 -- org.springframework.context  
 -- BeanFactory提供配置结构和基本功能，加载并初始化Bean  
