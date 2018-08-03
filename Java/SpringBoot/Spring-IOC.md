@@ -67,4 +67,166 @@ public void testHello() {
 
 ## Spring注入方式
 
-TODO...
+Spring注入: 指在启动Spring容器加载bean配置的时候，完成对变量赋值的行为。
+
+常用注入方式:
+
+* 设值注入
+* 构造注入
+
+### 设值注入(Spring容器自动调用set方法)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="···">
+
+	<bean id="injectionService" class="com.ioc.injection.service. injectionServiceImpl"> 
+		# property属性 在injectionServiceImpl类中包含属性 name=名称为injectionDAO ref=引用id为injectionDAO的实例
+		<property name="injectionDAO" ref="injectionDAO"/>
+	</bean>
+	
+	<bean id="injectionDAO" class="com.ioc.injection.dao. injectionDAOImpl"> </bean>
+</brans>
+```
+
+### 构造注入
+
+构造方法创建实例时赋值injectionServiceImpl的injectionDAO属性injectionDAOImpl实例
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="···">
+
+	<bean id="injectionService" class="com.ioc.injection.service. injectionServiceImpl"> 
+		# property属性 在injectionServiceImpl类中包含属性 name=名称为injectionDAO ref=引用id为injectionDAO的实例
+		<constructor-arg name="injectionDAO" ref="injectionDAO"/>
+	</bean>
+	
+	<bean id="injectionDAO" class="com.ioc.injection.dao. injectionDAOImpl"> </bean>
+</brans>
+```
+
+#### 实例(设值注入)：
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="···">
+
+	<bean id="injectionService" class="com.ioc.injection.service. injectionServiceImpl"> 
+		# name = injectionServiceImpl中当前成员变量的名称
+		# ref = injectionDAOImpl的id
+		<property name="injectionDAO" ref="injectionDAO"/>
+	</bean>
+	
+	<bean id="injectionDAO" class="com.ioc.injection.dao. injectionDAOImpl"> </bean>
+</brans>
+```
+
+
+**InjectionService**
+
+```java
+package com.ioc.injection.service;
+
+public interface InjectionService {
+
+	public void save(String arg);
+	
+}
+```
+
+**InjectionServiceImpl**
+
+```java
+package com.ioc.injection.service;
+
+import com.ioc.injection.dao.InjectionDAO;
+
+public class InjectionServiceImpl implements InjectionService {
+
+	private InjectionDAO injectionDAO;
+	
+	// 设值注入
+	public void setInjectionDao(InjectionDAO injectionDAO) {
+		this.injectionDAO = injectionDAO;
+	}
+	
+	public void save(String arg) {
+		// 模拟业务操作
+		System.out.println("Service接受数据: " + arg);
+		arg = arg + ":" + this.hashCode();
+		injectionDAO.save(arg);
+	}
+	
+}
+```
+
+**InjectionDAO**
+
+```java
+package com.ioc.injection.dao;
+
+public interface InjectionDAO {
+
+	public void save(String arg);
+	
+}
+```
+
+**InjectionDAOImpl**
+
+```java
+package com.ioc.injection.dao;
+
+public class InjectionDAOImpl implements InjectionDAO {
+	
+	public void save(String arg) {
+		// 模拟数据库保存操作
+		System.out.println("保存数据: " + arg);
+	}
+	
+}
+```
+
+#### 实例(构造注入)：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="···">
+
+	<bean id="injectionService" class="com.ioc.injection.service. injectionServiceImpl"> 
+		# name = injectionServiceImpl中当前成员变量的名称
+		# ref = injectionDAOImpl的id
+		<constructor-arg name="injectionDAO" ref="injectionDAO"/>
+	</bean>
+	
+	<bean id="injectionDAO" class="com.ioc.injection.dao. injectionDAOImpl"> </bean>
+</brans>
+```
+
+**InjectionServiceImpl**
+
+```java
+package com.ioc.injection.service;
+
+import com.ioc.injection.dao.InjectionDAO;
+
+public class InjectionServiceImpl implements InjectionService {
+
+	private InjectionDAO injectionDAO;
+	
+	// 构造注入
+	public InjectionServiceImpl(InjectionDAO injectionDAO) {
+		this.injectionDAO = injectionDAO;
+	}
+	
+	public void save(String arg) {
+		// 模拟业务操作
+		System.out.println("Service接受数据: " + arg);
+		arg = arg + ":" + this.hashCode();
+		injectionDAO.save(arg);
+	}
+	
+}
+```
