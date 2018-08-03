@@ -21,6 +21,83 @@
 * session (同上，在当前session内有效)
 * global session (基于portlet的web中有效(portlet定义global session)，如果在web中，同session)
 
+#### 实例一(singleton)
+
+```java
+package com.bean;
+
+public class BeanScope {
+	public void say() {
+		System.out.println("BeanScope say:" + this.hashCode());
+	}
+}
+```
+
+```xml
+<beans>
+	<bean id="beanScope" class="com.bean.BeanScope" scope="singleton"> </bean>
+</beans>
+```
+
+单元测试
+
+```java
+@Test
+public void testSay() {
+	BeanScope beanScope = super.getBean("beanScope");
+	beanScope.say();
+	
+	BeanScope beanScope2 = super.getBean("beanScope");
+	beanScope2.say();
+}
+```
+
+输出 
+
+```
+BeanScope say: 1443156414
+BeanScope say: 1443156414
+```
+
+#### 实例二(prototype)
+
+```java
+package com.bean;
+
+public class BeanScope {
+	public void say() {
+		System.out.println("BeanScope say:" + this.hashCode());
+	}
+}
+```
+
+```xml
+<beans>
+	<bean id="beanScope" class="com.bean.BeanScope" scope="prototype"> </bean>
+</beans>
+```
+
+单元测试
+
+```java
+@Test
+public void testSay() {
+	BeanScope beanScope = super.getBean("beanScope");
+	beanScope.say();
+	
+	BeanScope beanScope2 = super.getBean("beanScope");
+	beanScope2.say();
+}
+```
+
+输出 
+
+```
+BeanScope say: 291357518
+BeanScope say: 874241356
+```
+
+
 ## Bean的生命周期
 
 * 生命周期  
@@ -29,3 +106,4 @@
 -- 使用  
 -- 销毁  
 
+TODO...

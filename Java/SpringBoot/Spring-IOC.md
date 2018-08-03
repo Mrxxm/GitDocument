@@ -106,7 +106,7 @@ Spring注入: 指在启动Spring容器加载bean配置的时候，完成对变�
 </brans>
 ```
 
-#### 实例(设值注入)：
+#### 实例一(设值注入)：
 
 
 ```xml
@@ -189,7 +189,7 @@ public class InjectionDAOImpl implements InjectionDAO {
 }
 ```
 
-#### 实例(构造注入)：
+#### 实例二(构造注入)：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
