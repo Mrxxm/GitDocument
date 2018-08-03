@@ -106,4 +106,151 @@ BeanScope say: 874241356
 -- 使用  
 -- 销毁  
 
+
+#### 实例一
+
+```java
+package com.lifecycle
+
+public class BeanLifeCycle {
+
+	public void start() {
+		System.out.println(" Bean start .");
+	}
+	
+	public void stop() {
+		System.out.println(" Bean stop .");
+	}
+	
+}
+```
+
+```xml
+<bean id="beanLifeCycle" class="com.lifecycle.BeanLifeCycle" init-method="start" destroy-method="stop"> </bean>
+
+```
+
+单元测试
+
+```java
+@Test
+public void test1() {
+	BeanLifeCycle bean = super.getBean("beanLifeCycle");
+}
+```
+
+输出 
+
+```
+信息：Loading ...
+Bean start .
+信息：Closing ...
+Bean stop .
+```
+
+#### 实例二
+
+```java
+package com.lifecycle
+
+public class BeanLifeCycle implements InitializingBean,DisposableBean {
+
+	@Overrider
+	public void destroy() throws Exception {
+		System.out.println(" Bean destroy .");
+	}
+	
+	@Overrider
+	public void afterPropertiesSet() throws Exception {
+		System.out.println(" Bean afterPropertiesSet .");
+	}
+	
+}
+```
+
+```xml
+<bean id="beanLifeCycle" class="com.lifecycle.BeanLifeCycle"> </bean>
+
+```
+
+单元测试
+
+```java
+@Test
+public void test1() {
+	BeanLifeCycle bean = super.getBean("beanLifeCycle");
+}
+```
+
+输出 
+
+```
+信息：Loading ...
+Bean afterPropertiesSet .
+信息：Closing ...
+Bean destroy .
+```
+
+#### 实例三
+
+```java
+package com.lifecycle
+
+public class BeanLifeCycle {
+
+	public void defaultInit() {
+		System.out.println(" Bean defaultInit .");
+	}
+	
+	public void defaultDestroy() {
+		System.out.println(" Bean defaultDestroy .");
+	}
+}
+```
+
+```xml
+<beans xmlns="···" default-init-method="defaultInit" default-destroy-method="defaultDestroy">
+	<bean id="beanLifeCycle" class="com.lifecycle.BeanLifeCycle"> </bean>
+</beans>
+```
+
+单元测试
+
+```java
+@Test
+public void test1() {
+	BeanLifeCycle bean = super.getBean("beanLifeCycle");
+}
+```
+
+输出 
+
+```
+信息：Loading ...
+Bean defaultInit .
+信息：Closing ...
+Bean defaultDestroy .
+```
+
+### 实例四
+
+* **当同时使用了三种方式：实例二先于实例一，实例三不输出(default方式被覆盖)**
+
+输出 
+
+```
+信息：Loading ...
+Bean afterPropertiesSet .
+Bean start .
+
+信息：Closing ...
+Bean destroy .
+Bean stop .
+```
+
+* **当xml中配置defaultInit和Destroy方法，Bean中可以不实现两个默认方法**
+
+
+## Bean装配之Aware接口
+
 TODO...
