@@ -155,12 +155,12 @@ package com.lifecycle
 
 public class BeanLifeCycle implements InitializingBean,DisposableBean {
 
-	@Overrider
+	@Override
 	public void destroy() throws Exception {
 		System.out.println(" Bean destroy .");
 	}
 	
-	@Overrider
+	@Override
 	public void afterPropertiesSet() throws Exception {
 		System.out.println(" Bean afterPropertiesSet .");
 	}
@@ -252,5 +252,77 @@ Bean stop .
 
 
 ## Bean装配之Aware接口
+
+* Spring中提供一些以Aware结尾的接口，实现Aware接口的bean在被初始化之后，可以获取相应资源
+* 通过Aware接口，可以对Spring相应资源进行操作(一定要慎重)
+* 为对Spring进行简单的扩展提供了方便的入口
+
+#### 实例一
+
+	package com.aware;
+	
+	import org.···.ApplicationContextAware;
+	
+	public class MoocApplicationContext implements ApplicationContextAware {
+		
+		@Override
+		public void setApplicationcontext(ApplicationContext applicationContext) throws BeansException {
+		System.out.println("MoocApplicationContext: " + applicationContext.getBean("moocApplicationContext").hashCode());
+		
+		}
+	}
+	
+
+配置文件
+
+	<bean id="moocApplicationContext" class="com.aware.MoocApplicationContext" > </bean>
+
+
+单元测试
+	
+	@Test
+	public void testMoocApplicationContext() {
+		System.out.println("testApplicationContext: " + super.getBean("moocApplicationContext").hashCode());
+	}
+	
+输出
+
+	MoocApplicationContext: 123454567554
+	testApplicationContext: 123454567554
+	
+
+#### 实例二
+
+	package com.aware;
+	
+	import org.···. BeanNameAware;
+	
+	public class MoocBeanName implements BeanNameAware {
+		
+		@Override
+		public void setBeanName(String name) {
+		System.out.println("MoocBeanName: " + name);
+		
+		}
+	}
+	
+配置文件
+
+	<bean id="moocBeanName" class="com.aware.MoocBeanName" > </bean>
+
+单元测试
+	
+	@Test
+	public void testMoocBeanName() {
+		System.out.println("testMoocBeanName: " + super.getBean("moocBeanName"));
+	}
+		
+输出
+
+	MoocBeanName: moocBeanName
+	testMoocBeanName: com.aware.MoocBeanName@2342424
+
+
+
 
 TODO...
