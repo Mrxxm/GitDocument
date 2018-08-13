@@ -323,6 +323,167 @@ Bean stop .
 	testMoocBeanName: com.aware.MoocBeanName@2342424
 
 
+## Bean的自动装配
+
+* NO(不做任何操作,默认选项)
+* byname(根据属性名自动装配,检查容器并根据名字查找与属性完全一致的bean,并将其属性自动装配)
+* byType(容器中存在一个与指定属性类型相同的bean,存在多个相同类型，则抛出异常,如果没有找到则不发生任何事)
+* Constructor(与byType方式类似,不同之处在于它应用于构造器参数,如果IOC容器中没有找到与构造器参数一致的bean,那么抛出异常)
+
+#### 实例一
+	
+配置文件
+
+	<beans xmlns="..." default-autowire="byname">
+
+		<bean id="autoWritingService" class="com.autowriting.AutoWritingService" > </bean>
+	
+		<bean id="autoWritingDAO" class="com.autowriting.AutoWritingDAO" > </bean>
+	
+	</beans>
+单元测试
+	
+	public TestAutoWriting() {
+		super("classpath:spring-autowriting.xml");
+	}
+	
+	@Test
+	public void testSay() {
+		AutoWritingService service = super.getBean("autoWritingService");
+		
+		service.say("this is test");
+	}
+
+DAO
+
+	package com.autowriting;
+	
+	public class AutoWritingDAO{
+		public void say(String word) {
+			System.out.println("AutoWiringDAO" + word);
+		}
+	}
+
+Service
+
+	package com.autowriting;
+	
+	public class AutoWritingService{
+	
+		private AutoWritingDAO autoWirtingDAO;
+	
+		public void setAutoWritingDAO(AutoWritingDAO autoWirtingDAO) {
+			this.autoWirtingDAO = autoWirtingDAO;
+		}
+		
+		public void say(String word) {
+			this.autoWritingDAO.say(word);
+		}
+	}
+
+
+#### 实例二(byType和bean的id没有直接的关系)
+	
+配置文件
+
+	<beans xmlns="..." default-autowire="byType">
+
+		<bean id="autoWritingService" class="com.autowriting.AutoWritingService" > </bean>
+	
+		<bean id="autoWritingDAO111" class="com.autowriting.AutoWritingDAO" > </bean>
+	
+	</beans>
+单元测试
+	
+	public TestAutoWriting() {
+		super("classpath:spring-autowriting.xml");
+	}
+	
+	@Test
+	public void testSay() {
+		AutoWritingService service = super.getBean("autoWritingService");
+		
+		service.say("this is test");
+	}
+
+DAO
+
+	package com.autowriting;
+	
+	public class AutoWritingDAO{
+		public void say(String word) {
+			System.out.println("AutoWiringDAO" + word);
+		}
+	}
+
+Service
+
+	package com.autowriting;
+	
+	public class AutoWritingService{
+	
+		private AutoWritingDAO autoWirtingDAO;
+	
+		public void setAutoWritingDAO(AutoWritingDAO autoWirtingDAO) {
+			this.autoWirtingDAO = autoWirtingDAO;
+		}
+		
+		public void say(String word) {
+			this.autoWritingDAO.say(word);
+		}
+	}
+
+#### 实例三(构造器与类型相关与id无关)
+	
+配置文件
+
+	<beans xmlns="..." default-autowire="constructor">
+
+		<bean id="autoWritingService" class="com.autowriting.AutoWritingService" > </bean>
+	
+		<bean id="autoWritingDAO" class="com.autowriting.AutoWritingDAO" > </bean>
+	
+	</beans>
+单元测试
+	
+	public TestAutoWriting() {
+		super("classpath:spring-autowriting.xml");
+	}
+	
+	@Test
+	public void testSay() {
+		AutoWritingService service = super.getBean("autoWritingService");
+		
+		service.say("this is test");
+	}
+
+DAO
+
+	package com.autowriting;
+	
+	public class AutoWritingDAO{
+		public void say(String word) {
+			System.out.println("AutoWiringDAO" + word);
+		}
+	}
+
+Service
+
+	package com.autowriting;
+	
+	public class AutoWritingService{
+	
+		private AutoWritingDAO autoWirtingDAO;
+		
+		// 构造方法
+		public AutoWritingService(AutoWritingDAO autoWirtingDAO) {
+			this.autoWirtingDAO = autoWirtingDAO;
+		}
+		
+		public void say(String word) {
+			this.autoWritingDAO.say(word);
+		}
+	}
 
 
 TODO...
