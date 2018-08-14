@@ -904,7 +904,146 @@ Symfony Container Public Services
 
 新建一个BaseController，可以将共享的代码写在BaseController中。
 
-## TODO
+## 模板引擎
 
+#### Twig
+
+**基本语法**
+
+* 输出 {{    }}  
+
+* 判断 {%    %}  
+
+* 注释 {#    #}
+
+**核心概念**
+
+用类的继承概念去管理页面之间的关系。
+
+**整合模板**
+
+1. Symfony只有Web目录是供外界访问，资源文件生成软链接到Web目录下。
+
+2. 生成软链接 `php app/console assets:install web --symlink --relative`
+
+3. 将下载的模板文件`index.html` 命名为 `layout.html.twig`,并在`index.html.twig` 继承 `layout.html.twig`这个模板页面。
+
+ `index.html.twig`
+
+	```
+	{% extends 'DemoWeb::layout.html.twig' %}
+	```	
+4. 将`layout.html.twig`中的资源链接做修改
+	
+	 `layout.html.twig`
+
+	```
+	{{ asset(bundles/demoweb/css/bootstrap.min.css) }}
+	```	
+	
+## 资源文件的管理
+
+**资源文件定义**
+
+* css
+
+* js
+
+* 图片
+
+#### css/js文件生命周期
+
+
+
+#### 注册/定义资源
+
+* 直接使用某个css/js资源
+
+	{{ asset('xxx.js') }}
+
+* 注册、定义资源：
+
+```
+{% block js %}
+	{% javascripts '@DemoWeb/Resources/public/js/*' %} 
+		<script type="text/javascript" src="{{ asset_url }}"> </script> 
+	{% endjavascripts %} 
+{% endblock %}
+
+{% block css %}
+	{% stylesheets '@DemoWeb/Resources/public/css/*' %} 
+		<link="stylesheet" href="{{ asset_url }}" /> 
+	{% endstylesheets %} 
+{% endblock %} 
+```
+
+#### 页面共享css/js的通用策略
+
+`layout.html.twig`
+
+```
+{% block global_js %}
+{% endblock %}
+
+{% block global_css %}
+{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+```
+
+#### 代码压缩和优化
+
+## 数据库操作
+
+#### 操作数据库几个基本需求
+
+* 安全
+
+* 性能
+
+* ORM(操作类一样去操作数据库)
+
+* 支持多数据库
+
+* 支持多种第三方插件
+
+#### Doctrine(ORM工具)
+
+* 实体对象(Entity)
+
+	字段
+	
+	关系
+	
+* 对象操作集合(Repository)
+
+* Proxy Class
+
+#### Doctrine2 - DQL
+
+* DQL 
+
+#### Doctrine2 - 事件监听
+
+* 事件监听机制 
+
+#### 设计、配置、生成数据库
+
+
+## 表单
+
+
+
+
+
+
+
+
+	
 
 TODO...
