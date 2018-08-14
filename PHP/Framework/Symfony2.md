@@ -471,3 +471,304 @@ class DefaultController extends Controller
 ```
 hello world!
 ```
+
+## 路由
+
+当一个请求发送到您的应用程序，它包含一个确切的“资源”的客户端请求地址。该地址被称为URL（或URI），它可以是/contact、/blog/read-me或其它任何东西。下面是一个HTTP请求的例子：
+
+```
+GET /blog/my-blog-post
+```
+
+symfony路由系统的目的是解析url，并确定调用哪个控制器。整个过程是这样的：
+
+1. 由Symfony的前端控制器（app.php）来处理请求。
+
+2. symfony的核心（Kernel内核）要求路由器来检查请求。
+
+3. 路由将输入的URL匹配到一个特定的路由,并返回路由信息，其中包括要执行的控制器信息。
+
+4. Symfony内核执行控制器并最终返回Response对象。
+
+![](http://www.newlifeclan.com/symfony/wp-content/uploads/sites/2/2014/12/request-flow.png)
+
+路由是将一个输入URL转换成特定的工具来执行控制器。
+
+#### 路由的四种配置
+
+* Annotation(允许你在方法的上面用注释定义方法运行状态的功能)
+* router.yml(Symfony2常用配置格式)
+* router.xml
+* PHP
+
+#### 定义URL
+
+* 静态URL
+* 动态URL
+
+**添加nginx配置**
+
+```
+server {
+    listen      80;
+
+    server_name my_project.cn;
+    root /var/www/my_project/web;
+
+    error_log /var/log/nginx/symfony.error.log;
+    access_log /var/log/nginx/symfony.access.log;
+    location / {
+    index app_dev.php;
+    #index app.php;
+    try_files $uri @rewriteapp;
+    }	
+
+    location @rewriteapp {
+    rewrite ^(.*)$ /app_dev.php/$1 last;
+    #rewrite ^(.*)$ /app.php/$1 last;
+    }  
+
+    location ~ ^/(app|app_dev)\.php(/|$) {
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    include fastcgi_params;
+    fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+    fastcgi_param  HTTPS              off;
+    fastcgi_param HTTP_X-Sendfile-Type X-Accel-Redirect;
+    # [改] 请根据程序的实际安装路径修改。该目录下存放的是私有的文件。
+    fastcgi_param HTTP_X-Accel-Mapping /udisk=/var/www/symfony/app/data/udisk;
+    fastcgi_buffer_size 128k;
+    fastcgi_buffers 8 128k;
+    }
+
+    location ~ \.php$ {
+        return 404;
+    }
+}
+
+```
+
+**访问`http://my_project.cn`**
+
+```
+Welcome to
+Symfony 3.4.14
+Your application is now ready. You can start working on it at: /private/var/www/my_project/
+
+What's next?
+Read the documentation to learn
+How to create your first page in Symfony
+```
+#### 静态URL
+
+**配置一**
+
+```
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/hello")
+     */
+    public function indexAction()
+    {
+        return $this->render('@DemoWeb/Default/index.html.twig');
+    }
+}
+```
+
+**`http://my_project.cn/hello`**
+
+```
+hello world!
+```
+
+#### 动态URL
+
+**配置一**
+
+* `requirements`限制`$page_num`传入的参数
+* `defaults`定义默认值,路由访问`http://my_project.cn/page`
+
+```
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/page/{page_num}", defaults={"page_num":1}, requirements={"page_num"="\d+"})
+     */
+    public function indexAction($page_num)
+    {
+        return $this->render('@DemoWeb/Default/index.html.twig', array(
+            'page' => $page_num,
+        ));
+    }
+}
+```
+
+**`http://my_project.cn/page/4`**  
+**`http://my_project.cn/page`**
+
+```
+Hello page 4!
+Hello page 1!
+```
+**配置二**
+
+```
+/**
+ * @Route("/page")
+ */
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/index/{page_num}", defaults={"page_num":1}, requirements={"page_num"="\d"})
+     */
+    public function indexAction($page_num)
+    {
+        return $this->render('@DemoWeb/Default/index.html.twig', array(
+            'page' => $page_num,
+        ));
+    }
+}
+```
+
+**路由打印**
+
+```
+➜  my_project git:(master) ✗ bin/console debug:router
+ -------------------------- -------- -------- ------ ----------------------------------- 
+  Name                       Method   Scheme   Host   Path                               
+ -------------------------- -------- -------- ------ ----------------------------------- 
+  _wdt                       ANY      ANY      ANY    /_wdt/{token}                      
+  _profiler_home             ANY      ANY      ANY    /_profiler/                        
+  _profiler_search           ANY      ANY      ANY    /_profiler/search                  
+  _profiler_search_bar       ANY      ANY      ANY    /_profiler/search_bar              
+  _profiler_phpinfo          ANY      ANY      ANY    /_profiler/phpinfo                 
+  _profiler_search_results   ANY      ANY      ANY    /_profiler/{token}/search/results  
+  _profiler_open_file        ANY      ANY      ANY    /_profiler/open                    
+  _profiler                  ANY      ANY      ANY    /_profiler/{token}                 
+  _profiler_router           ANY      ANY      ANY    /_profiler/{token}/router          
+  _profiler_exception        ANY      ANY      ANY    /_profiler/{token}/exception       
+  _profiler_exception_css    ANY      ANY      ANY    /_profiler/{token}/exception.css   
+  _twig_error_test           ANY      ANY      ANY    /_error/{code}.{_format}           
+  demo_web_default_index     ANY      ANY      ANY    /page/index/{page_num}             
+  homepage                   ANY      ANY      ANY    /                                  
+ -------------------------- -------- -------- ------ ----------------------------------- 
+➜  my_project git:(master) ✗ bin/console router:match /page/index
+
+
+                                                                                                                        
+ [OK] Route "demo_web_default_index" matches                                                                            
+                                                                                                                        
+
++--------------+----------------------------------------------------------+
+| Property     | Value                                                    |
++--------------+----------------------------------------------------------+
+| Route Name   | demo_web_default_index                                   |
+| Path         | /page/index/{page_num}                                   |
+| Path Regex   | #^/page/index(?:/(?P<page_num>\d))?$#sD                  |
+| Host         | ANY                                                      |
+| Host Regex   |                                                          |
+| Scheme       | ANY                                                      |
+| Method       | ANY                                                      |
+| Requirements | page_num: \d                                             |
+| Class        | Symfony\Component\Routing\Route                          |
+| Defaults     | _controller: DemoWebBundle:Default:index                 |
+|              | page_num: 1                                              |
+| Options      | compiler_class: Symfony\Component\Routing\RouteCompiler  |
+| Callable     | Demo\WebBundle\Controller\DefaultController::indexAction |
++--------------+----------------------------------------------------------+
+```
+
+**修改路由名称**
+
+```
+/**
+ * @Route("/page")
+ */
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/index/{page_num}", name="page_index", defaults={"page_num":1}, requirements={"page_num"="\d"})
+     */
+    public function indexAction($page_num)
+    {
+        return $this->render('@DemoWeb/Default/index.html.twig', array(
+            'page' => $page_num,
+        ));
+    }
+}
+```
+
+```
+➜  my_project git:(master) ✗ bin/console router:match /page/index
+
+
+                                                                                                                        
+ [OK] Route "page_index" matches                                                                                        
+                                                                                                                        
+
++--------------+----------------------------------------------------------+
+| Property     | Value                                                    |
++--------------+----------------------------------------------------------+
+| Route Name   | page_index                                               |
+| Path         | /page/index/{page_num}                                   |
+| Path Regex   | #^/page/index(?:/(?P<page_num>\d))?$#sD                  |
+| Host         | ANY                                                      |
+| Host Regex   |                                                          |
+| Scheme       | ANY                                                      |
+| Method       | ANY                                                      |
+| Requirements | page_num: \d                                             |
+| Class        | Symfony\Component\Routing\Route                          |
+| Defaults     | _controller: DemoWebBundle:Default:index                 |
+|              | page_num: 1                                              |
+| Options      | compiler_class: Symfony\Component\Routing\RouteCompiler  |
+| Callable     | Demo\WebBundle\Controller\DefaultController::indexAction |
++--------------+----------------------------------------------------------+
+```
+
+**获取请求参数**
+
+```
+use Symfony\Component\HttpFoundation\Request;
+/**
+ * @Route("/page")
+ */
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/index/{page_num}", name="page_index", defaults={"page_num":1}, requirements={"page_num"="\d"})
+     */
+    public function indexAction(Request $request, $page_num)
+    {
+        $a = $request->get('a');
+
+        return $this->render('@DemoWeb/Default/index.html.twig', array(
+            'page' => $page_num,
+            'a' => $a,
+        ));
+    }
+}
+```
+
+**`http://my_project.cn/page/index?a=888`**
+
+```
+Hello page 1!
+a = 888
+```
+
+## 控制器
+
+#### 基本概念
+
+* 输入(Request) -- header信息、get信息、post数据
+* 输出(Response) -- 页面、JSON字符串、URL
+
+Symfony是对Request进行加工，根据业务需求处理成特定的Response并返回给用户的流程。Request和Response都是Symfony的两个类。
+
+#### Request
+
+
+
+
+TODO...
