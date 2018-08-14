@@ -768,7 +768,143 @@ Symfony是对Request进行加工，根据业务需求处理成特定的Response�
 
 #### Request
 
+相同参数的url，get请求优先于post请求。
 
+#### Response
+
+* 返回Response
+* 重定向RedirectResponse
+* 返回JsonResponse
+
+#### Session
+
+```
+$this->getRequest()->getSession->set("c", 1000);
+$this->getRequest()->getSession->get("c");
+```
+session值取出为空，有可能`app/cache/dev`目录的权限设置不对。
+
+使用在表单验证
+
+```
+$this->getRequest()->getSession->getFlashBag()->add(
+	'notice',
+	'you hace something wrong'
+);
+```
+
+#### Service
+
+* SOA 面向服务架构
+
+显示所有service
+
+```
+➜  my_project git:(master) ✗ bin/console debug:container 
+
+Symfony Container Public Services
+=================================
+
+ ---------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------- 
+  Service ID                                                                                                 Class name                                                                 
+ ---------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------- 
+  AppBundle\Controller\DefaultController                                                                     AppBundle\Controller\DefaultController                                     
+  Symfony\Bundle\FrameworkBundle\Controller\RedirectController                                               Symfony\Bundle\FrameworkBundle\Controller\RedirectController               
+  Symfony\Bundle\FrameworkBundle\Controller\TemplateController                                               Symfony\Bundle\FrameworkBundle\Controller\TemplateController               
+  abstract.instanceof.AppBundle\Controller\DefaultController                                                 AppBundle\Controller\DefaultController                                     
+  cache.app                                                                                                  Symfony\Component\Cache\Adapter\TraceableAdapter                           
+  cache.app_clearer                                                                                          alias for "cache.default_clearer"                                          
+  cache.global_clearer                                                                                       Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer                 
+  cache.system                                                                                               Symfony\Component\Cache\Adapter\TraceableAdapter                           
+  cache.system_clearer                                                                                       Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer                 
+  cache_clearer                                                                                              Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer                
+  cache_warmer                                                                                               Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate              
+  console.command.doctrine_bundle_doctrinecachebundle_command_containscommand                                alias for "doctrine_cache.contains_command"                                
+  console.command.doctrine_bundle_doctrinecachebundle_command_deletecommand                                  alias for "doctrine_cache.delete_command"                                  
+  console.command.doctrine_bundle_doctrinecachebundle_command_flushcommand                                   alias for "doctrine_cache.flush_command"                                   
+  console.command.doctrine_bundle_doctrinecachebundle_command_statscommand                                   alias for "doctrine_cache.stats_command"                                   
+  console.command_loader                                                                                     Symfony\Component\Console\CommandLoader\ContainerCommandLoader             
+  data_collector.dump                                                                                        Symfony\Component\HttpKernel\DataCollector\DumpDataCollector               
+  database_connection                                                                                        alias for "doctrine.dbal.default_connection"                               
+  doctrine                                                                                                   Doctrine\Bundle\DoctrineBundle\Registry                                    
+  doctrine.dbal.default_connection                                                                           Doctrine\DBAL\Connection                                                   
+  doctrine.orm.default_entity_manager                                                                        Doctrine\ORM\EntityManager                                                 
+  doctrine.orm.default_metadata_cache                                                                        alias for "doctrine_cache.providers.doctrine.orm.default_metadata_cache"   
+  doctrine.orm.default_query_cache                                                                           alias for "doctrine_cache.providers.doctrine.orm.default_query_cache"      
+  doctrine.orm.default_result_cache                                                                          alias for "doctrine_cache.providers.doctrine.orm.default_result_cache"     
+  doctrine.orm.entity_manager                                                                                alias for "doctrine.orm.default_entity_manager"                            
+  doctrine_cache.providers.doctrine.orm.default_metadata_cache                                               Doctrine\Common\Cache\ArrayCache                                           
+  doctrine_cache.providers.doctrine.orm.default_query_cache                                                  Doctrine\Common\Cache\ArrayCache                                           
+  doctrine_cache.providers.doctrine.orm.default_result_cache                                                 Doctrine\Common\Cache\ArrayCache                                           
+  event_dispatcher                                                                                           alias for "debug.event_dispatcher"                                         
+  filesystem                                                                                                 Symfony\Component\Filesystem\Filesystem                                    
+  form.factory                                                                                               Symfony\Component\Form\FormFactory                                         
+  form.type.birthday                                                                                         Symfony\Component\Form\Extension\Core\Type\BirthdayType                    
+  form.type.button                                                                                           Symfony\Component\Form\Extension\Core\Type\ButtonType                      
+  form.type.checkbox                                                                                         Symfony\Component\Form\Extension\Core\Type\CheckboxType                    
+  form.type.collection                                                                                       Symfony\Component\Form\Extension\Core\Type\CollectionType                  
+  form.type.country                                                                                          Symfony\Component\Form\Extension\Core\Type\CountryType                     
+  form.type.currency                                                                                         Symfony\Component\Form\Extension\Core\Type\CurrencyType                    
+  form.type.date                                                                                             Symfony\Component\Form\Extension\Core\Type\DateType                        
+  form.type.datetime                                                                                         Symfony\Component\Form\Extension\Core\Type\DateTimeType                    
+  form.type.email                                                                                            Symfony\Component\Form\Extension\Core\Type\EmailType                       
+  form.type.file                                                                                             Symfony\Component\Form\Extension\Core\Type\FileType                        
+  form.type.hidden                                                                                           Symfony\Component\Form\Extension\Core\Type\HiddenType                      
+  form.type.integer                                                                                          Symfony\Component\Form\Extension\Core\Type\IntegerType                     
+  form.type.language                                                                                         Symfony\Component\Form\Extension\Core\Type\LanguageType                    
+  form.type.locale                                                                                           Symfony\Component\Form\Extension\Core\Type\LocaleType                      
+  form.type.money                                                                                            Symfony\Component\Form\Extension\Core\Type\MoneyType                       
+  form.type.number                                                                                           Symfony\Component\Form\Extension\Core\Type\NumberType                      
+  form.type.password                                                                                         Symfony\Component\Form\Extension\Core\Type\PasswordType                    
+  form.type.percent                                                                                          Symfony\Component\Form\Extension\Core\Type\PercentType                     
+  form.type.radio                                                                                            Symfony\Component\Form\Extension\Core\Type\RadioType                       
+  form.type.range                                                                                            Symfony\Component\Form\Extension\Core\Type\RangeType                       
+  form.type.repeated                                                                                         Symfony\Component\Form\Extension\Core\Type\RepeatedType                    
+  form.type.reset                                                                                            Symfony\Component\Form\Extension\Core\Type\ResetType                       
+  form.type.search                                                                                           Symfony\Component\Form\Extension\Core\Type\SearchType                      
+  form.type.submit                                                                                           Symfony\Component\Form\Extension\Core\Type\SubmitType                      
+  form.type.text                                                                                             Symfony\Component\Form\Extension\Core\Type\TextType                        
+  form.type.textarea                                                                                         Symfony\Component\Form\Extension\Core\Type\TextareaType                    
+  form.type.time                                                                                             Symfony\Component\Form\Extension\Core\Type\TimeType                        
+  form.type.timezone                                                                                         Symfony\Component\Form\Extension\Core\Type\TimezoneType                    
+  form.type.url                                                                                              Symfony\Component\Form\Extension\Core\Type\UrlType                         
+  http_kernel                                                                                                Symfony\Component\HttpKernel\HttpKernel                                    
+  instanceof.Symfony\Bundle\FrameworkBundle\Controller\Controller.0.AppBundle\Controller\DefaultController   AppBundle\Controller\DefaultController                                     
+  kernel                                                                                                                                                                                
+  mailer                                                                                                     alias for "swiftmailer.mailer.default"                                     
+  profiler                                                                                                   Symfony\Component\HttpKernel\Profiler\Profiler                             
+  request_stack                                                                                              Symfony\Component\HttpFoundation\RequestStack                              
+  router                                                                                                     alias for "router.default"                                                 
+  routing.loader                                                                                             Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader                    
+  security.authentication_utils                                                                              Symfony\Component\Security\Http\Authentication\AuthenticationUtils         
+  security.authorization_checker                                                                             Symfony\Component\Security\Core\Authorization\AuthorizationChecker         
+  security.csrf.token_manager                                                                                Symfony\Component\Security\Csrf\CsrfTokenManager                           
+  security.password_encoder                                                                                  alias for "security.user_password_encoder.generic"                         
+  security.token_storage                                                                                     Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage  
+  service_container                                                                                          Symfony\Component\DependencyInjection\ContainerInterface                   
+  services_resetter                                                                                          Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter          
+  session                                                                                                    Symfony\Component\HttpFoundation\Session\Session                           
+  swiftmailer.mailer.abstract                                                                                Swift_Mailer                                                               
+  swiftmailer.mailer.default                                                                                 Swift_Mailer                                                               
+  swiftmailer.mailer.default.plugin.messagelogger                                                            Swift_Plugins_MessageLogger                                                
+  swiftmailer.mailer.default.transport.real                                                                  alias for "swiftmailer.mailer.default.transport.smtp"                      
+  translator                                                                                                 Symfony\Component\Translation\IdentityTranslator                           
+  twig                                                                                                       Twig\Environment                                                           
+  twig.controller.exception                                                                                  Symfony\Bundle\TwigBundle\Controller\ExceptionController                   
+  twig.controller.preview_error                                                                              Symfony\Bundle\TwigBundle\Controller\PreviewErrorController                
+  validator                                                                                                  alias for "debug.validator"                                                
+  var_dumper.cloner                                                                                          Symfony\Component\VarDumper\Cloner\VarCloner                               
+  web_profiler.controller.exception                                                                          Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController            
+  web_profiler.controller.profiler                                                                           Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController             
+  web_profiler.controller.router                                                                             Symfony\Bundle\WebProfilerBundle\Controller\RouterController               
+ ---------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------- 
+```
+
+#### 控制器总结
+
+新建一个BaseController，可以将共享的代码写在BaseController中。
+
+## TODO
 
 
 TODO...
