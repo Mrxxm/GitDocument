@@ -486,4 +486,22 @@ Service
 	}
 
 
+## Resources
+
+* 针对资源文件的统一接口
+
+* Resources
+
+  UrlResource : URL对应的资源，根据一个url即可构建  
+  ClassPathResource : 获取类路径下的资源文件  
+  FileSystemResource : 获取文件系统的资源文件
+  ServletContextResource : ServletContext封装的资源，用于访问ServletContext环境下的资源
+  InputStreamResource : 针对于输入流封装的资源
+  ByteArrayResource : 针对于字节数组封装的资源
+  
+* ResourceLoader(对Resource进行加载的一个类)
+
+
+   
+
 TODO...
