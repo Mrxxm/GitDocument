@@ -1,5 +1,6 @@
 ## Importer
 
+````php
 	<?php
 
 	namespace UserImporterPlugin\Biz\Importer;
