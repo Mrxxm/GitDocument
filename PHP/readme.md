@@ -22,3 +22,23 @@ header("Accept-Ranges:bytes");
 header("Accept-Length:$file_size");
 header("Content-Disposition:attachment;filename=".$file_name);
 ```
+
+## SQL注入
+
+#### 数字注入
+
+`id = -1 OR 1 = 1;`
+
+#### 字符串注入
+
+用户名登录
+
+用户名：xuxiaomeng
+
+用户名：xuxiaomeng'#
+
+后面一段全部当做注释处理。
+`select * from user where user name = 'xuxiaomeng'#' and ...;`
+
+-- 后面有一个空格。  
+用户名：`xuxiaomeng'-- `
