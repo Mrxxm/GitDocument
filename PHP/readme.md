@@ -148,3 +148,136 @@ for	($i = 0; $i < 4; $i++) {
 }
 echo $code;
 ```
+
+## 函数特性
+
+#### 强类型参数
+
+需要在页面中标识：`declare(strict_types = 1);`
+
+定义：为参数列表中的参数指定类型。如果传入的类型不匹配，将会抛出TypeError异常。
+
+支持类型：
+
+* class/interface name php5.0.0
+* array php5.1.0
+* callable php5.4.0
+* bool,float,int,string php7.0.0
+
+#### 可变参数列表
+
+```
+func_num_args() // 返回函数参数数量
+func_get_arg()  // 返回函数参数某一项
+func_get_args() // 返回函数参数数组
+```
+
+
+```
+	function get_sum(...$nums){
+		
+	} 
+```
+
+#### 值传递引用传递
+
+* 引用传递 &
+
+#### PHP自定义超全局变量
+
+```
+$_GET、$_POST、$_COOKIE、$_SERVER、$_FILES、 $_ENV、$_REQUEST、$_SESSION
+```
+
+```
+// 定义全局变量
+global $name;
+GLOBALS['name'];
+```
+
+#### 可变函数
+
+#### 匿名函数
+
+* 最常用作回调函数参数的值
+* 闭包函数可以作为变量的值来使用
+
+```php
+$example = function () {
+	
+}
+
+$massage = "Hello";
+
+$example = function () use($message) {
+	echo $message;
+}
+
+$example();
+
+```
+
+```php
+function test($name, Closure $clo) {
+	echo "Hello, {$name}\n";
+	$clo();
+}
+
+test('Lily', function(){
+	echo "匿名函数作函数参数。";
+});
+
+```
+
+#### 代码重用
+
+```php
+set_include_path('testa');
+include('test1.php');
+
+ini_set('include_path', get_include_path().PATH_SEPARATOR.'testa');
+restore_include_path(); // 销毁引入的文件
+```
+
+#### `set_include_path`, `get_include_path`
+
+
+* `set_include_path`
+
+`set_include_path`是为include和require等文件包含函数用的。
+
+
+例如：`projectName/home/Action/lib`，在这个目录下有如下文件：a.php, b.php..........如果我们想在其他文件中包含这些文件时，我们可以这样写
+
+      set_include_path('projectName/home/Action/lib');
+
+      require('a.php');
+
+ 
+
+当指定一个目录为`include_path`时，但是当lib目录下找不到所要求包含的文件，而在当前页面目录下正好存在这个名称的文件时，则转为包含当前目录下的该文件。
+
+当指定了多个目录为 `include_path` ，而所要求包含的文件在这几个目录都有相同名称的文件存在时，php选择使用设定 `include_path` 时排位居前的目录下的文件。不同路径之间用PHP常量`PATH_SEPARATOR`来分割。在类unix的系统中，`PATH_SEPARATOR`是 ":"；在windows系统中，`PATH_SEPARATOR`的值是";";
+
+* `get_include_path`
+
+获取当前`include_path` 的值，也可以输出`include_path`，查看当前的包含路径。
+
+ 	string dirname ( string path )
+
+ 
+假如你的首页中用到了`_FILE_`这个变量：
+
+（假设你的网页所在目录为：`http://localhost/web/index.php`）,那么：
+
+ 
+
+`_FILE_`的值为`http://localhost/web/index.php`（一个绝对路径）。而此时`dirname (_FILE_)`表示的就是`http://localhost/web/`也就是没有`index.php`这个文件名。
+
+而`dirname(dirname(_FILE_))`表示的就是上一级的目录，以此类推；
+
+
+
+
+
+
