@@ -211,13 +211,13 @@ $ sudo /etc/init.d/cron restart
 # /sbin/service crond reload
 ```
 
-* 查看当前用户的cron配置  
+* 查看root用户的cron配置  
 `$ sudo crontab -l `
      
-* 编辑当前用户的cron配置  
+* 编辑root用户的cron配置  
 `$ sudo crontab -e `
      
-* 删除当前用户的cron配置  
+* 删除root用户的cron配置  
 `$ sudo crontab -r`
 
 每分钟输出当前时间到time.txt上  
@@ -314,3 +314,24 @@ LC_ALL=en_US.UTF-8
 `$ chsh -s /bin/zsh`  
 重启
 
+## crontab: no crontab for xuxiaomeng
+
+* `crontab -l`      显示的是当前用户的定时任务
+* `sudo crontab -l` 显示的是root用户的定时任务
+
+```
+➜  ~ crontab -l
+crontab: no crontab for xuxiaomeng
+➜  ~ sudo crontab -l
+*/1 * * * * /bin/date >> /Users/xuxiaomeng/Downloads/time.txt
+```
+
+* 创建一个当前用户的定时任务
+
+```
+➜  edusoho git:(develop) crontab -e
+➜  当前打开一个空的文件
+➜  我们输入i 插入一个空格 esc :wq
+➜  edusoho git:(develop) crontab -l 
+➜  不在报错误提示
+```
