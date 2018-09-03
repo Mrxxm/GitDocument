@@ -501,11 +501,12 @@ Service
   
 * ResourceLoader(对Resource进行加载的一个类)
 	
-  | Prefix  | Example  | Explanation |
-|:------------- |:---------------:| -------------:|
+	
+| Prefix  | Example  | Explanation |
+|:------- |:--------:| -----------:|
 | classpath| classpath:com/myapp/config.xml |load from the classpath|
-| file | file:/data/config.xml |load as URL,from the filesystem |
-| http | http://myserver/logo.png       |  load as URL | 
+| file     | file:/data/config.xml          |load as URL,from the filesystem |
+| http     | http://myserver/logo.png       |  load as URL        | 
 
 
  
