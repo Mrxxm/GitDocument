@@ -72,6 +72,8 @@ Artisan基本使用
 	
 	# ./configure --prefix=/usr/local/php-7.1.11  --exec-prefix=/usr/local/php-7.1.11 --bindir=/usr/local/php-7.1.11/bin --sbindir=/usr/local/php-7.1.11/sbin --includedir=/usr/local/php-7.1.11/include --libdir=/usr/local/php-7.1.11/lib/php --mandir=/usr/local/php-7.1.11/php/man --with-config-file-path=/usr/local/php-7.1.11/etc --with-mcrypt=/usr/include --with-mhash --with-openssl --with-mysqli --with-pdo-mysql=mysqlnd --with-gd --with-iconv --with-zlib --enable-zip --enable-inline-optimization --disable-debug --disable-rpath --enable-shared --enable-xml --enable-bcmath --enable-shmop --enable-sysvsem --enable-mbregex --enable-mbstring --enable-ftp --enable-gd-native-ttf --enable-pcntl --enable-sockets --with-xmlrpc --enable-soap --without-pear --with-gettext --enable-session --with-curl  --with-jpeg-dir --with-freetype-dir --enable-opcache  --enable-fpm  --with-fpm-user=www --with-fpm-group=www  --without-gdbm --disable-fileinfo --enable-intl
 
+	上面一步可能会产生报错 某个库未安装 使得make不成功
+	
 	# make
  
  	# make install
@@ -181,6 +183,8 @@ php 全局配置
 	从最初的warning开始追起 大概知道是在/usr/local/php/etc/php-fpm.d/缺少了一个.conf文件 然后进入此目录
 
 	发现有一个 www.conf.default 按照常识应该应该进行如下操作
+	
+	还会出现一个www用户问题 改成 nobody
 
 
 ## 部署遇到的问题
