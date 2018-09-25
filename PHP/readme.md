@@ -172,6 +172,33 @@ include、require、include_once、require_once
 `E_WARNING`: 警告错误  
 `E_NOTICE`: 提示错误  
 
+## 垮站点脚本攻击
+
+* 攻击者通过在表单中注入 HTML 或 JavaScript 代码
+
+
+如果用户在地址栏中键入了如下 URL：
+
+`http://www.example.com/test_form.php/%22%3E%3Cscript%3Ealert('hacked')%3C/script%3E`
+
+在这种情况下，上面的代码会转换为：
+
+`<form method="post" action="test_form.php"/><script>alert('hacked')</script>`
+
+这仅仅是一个关于 PHP_SELF 变量如何被利用的简单无害案例。
+
+#### 避免 `$_SERVER["PHP_SELF"]` 被利用
+
+通过使用 `htmlspecialchars()` 函数能够避免 `$_SERVER["PHP_SELF"]` 被利用。
+
+`<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">`
+
+`htmlspecialchars()` 函数把特殊字符转换为 HTML 实体。现在，如果用户试图利用 `PHP_SELF` 变量，会导致如下输出：
+
+`<form method="post" action="test_form.php/"><script>alert('hacked')</script>">`
+
+无法利用，没有危害！
+
 ## SQL注入
 
 #### 数字注入
