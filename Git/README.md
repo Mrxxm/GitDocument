@@ -106,6 +106,9 @@
 * 放弃某个文件的所有本地修改  
 `$ git checkout HEAD <file>`
 
+## 创建新的分支对应远程分支
+
+`$ git checkout -b feature/refactor-3 remotes/origin/feature/refactor-3`
 
 ## 实例
 
