@@ -16,7 +16,7 @@ B的地址为：IP：192.168.10.2 MAC: BB-BB-BB-BB-BB-BB
 
 不同网段的主机通信时，主机会封装网关（通常是路由器）的mac地址，然后主机将数据发送给路由器，后续路由进行路由转发，通过arp解析目标地址的mac地址，然后将数据包送达目的地。具体过程分析如下：
 
-![](https://img-blog.csdn.net/20160923110942379?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center)
+![](https://img3.doubanio.com/view/photo/l/public/p2535455641.jpg)
 
 如上图，主机A、B通过路由器连接，属于两个不同的网段子网掩码24（`255.255.255.0`）
 
