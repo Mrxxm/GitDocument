@@ -40,7 +40,7 @@ new HelloWorld();
 
 通过这个简单的例子可以发现，在类的实例化过程中，系统所做的工作大致是这样的：
 
-```
+```php
 /* 模拟系统实例化过程 */
 function instance($class)
 {
@@ -106,7 +106,6 @@ function __autoload($class)
 new HelloWorld();
 
 /**
- * 输出 HelloWorld 与报错信息
  * this is HelloWorld
  * HelloWorld.php
  * HelloWorld
@@ -137,5 +136,172 @@ new \百度\李彦宏(); // 百度\李彦宏（实际结果）
 
 ## spl_autoload
 
+接下来让我们要在含有命名空间的情况下去实现自动加载。这里我们使用 `spl_autoload_register()` 函数来实现，这需要你的 PHP 版本号大于 5.12。
+
+**`spl_autoload_register` 函数的功能就是把传入的函数（参数可以为回调函数或函数名称形式）注册到 `SPL __autoload` 函数队列中，并移除系统默认的 `__autoload()` 函数。**
+
+一旦调用 `spl_autoload_register()` 函数，当调用未定义类时，系统就会按顺序调用注册到 `spl_autoload_register()` 函数的所有函数，而不是自动调用 `__autoload()` 函数。
+
+现在，我们来创建一个 Linux 类，它使用 os 作为它的命名空间（建议文件名与类名保持一致）：
+
+* Linux.php
+* autoload.php
+
+Linux.php
+
+```php
+<?php
+
+namespace os;
+
+class Linux {
+
+	function __construct()
+    {
+        echo '<h1>' . __CLASS__ . '</h1>';
+    }
+    
+}
+```
+
+aotuload.php
+
+```php
+<?php
+
+spl_autoload_register(function ($class) { // class = os\Linux
+
+    /* 限定类名路径映射 */
+    $class_map = array(
+        // 限定类名 => 文件路径
+        'os\\Linux' => './Linux.php',
+    );
+
+    /* 根据类名确定文件名 */
+    $file = $class_map[$class];
+
+    /* 引入相关文件 */
+    if (file_exists($file)) {
+        include $file;
+    }
+});
+
+new \os\Linux();
+
+/**
+ * os\Linux
+ */
+```
+
+这里我们使用了一个数组去保存类名与文件路径的关系，这样当类名传入时，自动加载器就知道该引入哪个文件去加载这个类了。
+
+但是一旦文件多起来的话，映射数组会变得很长，这样的话维护起来会相当麻烦。**如果命名能遵守统一的约定，就可以让自动加载器自动解析判断类文件所在的路径。** 接下来要介绍的PSR-4 就是一种被广泛采用的约定方式。
+
 ## PSR-4规范
+
+PSR-4 是关于由文件路径自动载入对应类的相关规范，规范规定了一个完全限定类名需要具有以下结构：
+
+`\<顶级命名空间>(\<子命名空间>)*\<类名>`
+
+**PSR-4 规范中必须要有一个顶级命名空间，它的意义在于表示某一个特殊的目录（文件基目录）。子命名空间代表的是类文件相对于文件基目录的这一段路径（相对路径），类名则与文件名保持一致（注意大小写的区别）。**
+
+举个例子：在全限定类名 `\app\view\news\Index` 中，如果 app 代表 `C:\Baidu`，那么这个类的路径则是 `C:\Baidu\view\news\Index.php`
+
+我们就以解析 `\app\view\news\Index` 为例，编写一个简单的 Demo：
+
+```php
+$class = 'app\view\news\Index';
+
+/* 顶级命名空间路径映射 */
+$vendor_map = array(
+    'app' => 'C:\Baidu',
+);
+
+/* 解析类名为文件路径 */
+$vendor = substr($class, 0, strpos($class, '\\')); // 取出顶级命名空间[app]
+$vendor_dir = $vendor_map[$vendor]; // 文件基目录[C:\Baidu]
+$rel_path = dirname(substr($class, strlen($vendor))); // 相对路径[/view/news]
+$file_name = basename($class) . '.php'; // 文件名[Index.php]
+
+/* 输出文件所在路径 */
+echo $vendor_dir . $rel_path . DIRECTORY_SEPARATOR . $file_name;
+```
+
+通过这个 Demo 可以看出限定类名转换为路径的过程。那么现在就让我们用规范的面向对象方式去实现自动加载器吧。
+
+首先我们创建一个文件 Index.php，它处于 `\app\mvc\view\home` 目录中：
+
+```php
+namespace app\mvc\view\home;
+
+class Index
+{
+    function __construct()
+    {
+        echo '<h1> Welcome To Home </h1>';
+    }
+}
+```
+
+接着我们在创建一个加载类（不需要命名空间），它处于 \ 目录中：
+
+```php
+class Loader
+{
+    /* 路径映射 */
+    public static $vendorMap = array(
+        'app' => __DIR__ . DIRECTORY_SEPARATOR . 'app',
+    );
+
+    /**
+     * 自动加载器
+     */
+    public static function autoload($class)
+    {
+        $file = self::findFile($class);
+        if (file_exists($file)) {
+            self::includeFile($file);
+        }
+    }
+
+    /**
+     * 解析文件路径
+     */
+    private static function findFile($class)
+    {
+        $vendor = substr($class, 0, strpos($class, '\\')); // 顶级命名空间
+        $vendorDir = self::$vendorMap[$vendor]; // 文件基目录
+        $filePath = substr($class, strlen($vendor)) . '.php'; // 文件相对路径
+        return strtr($vendorDir . $filePath, '\\', DIRECTORY_SEPARATOR); // 文件标准路径
+    }
+
+    /**
+     * 引入文件
+     */
+    private static function includeFile($file)
+    {
+        if (is_file($file)) {
+            include $file;
+        }
+    }
+}
+```
+
+最后，将 Loader 类中的 autoload 注册到 `spl_autoload_register` 函数中：
+
+```php
+include 'Loader.php'; // 引入加载器
+spl_autoload_register('Loader::autoload'); // 注册自动加载
+
+new \app\mvc\view\home\Index(); // 实例化未引用的类
+
+/**
+ * 输出: <h1> Welcome To Home </h1>
+ */
+```
+
+示例中的代码其实就是 ThinkPHP 自动加载器源码的精简版，它是 ThinkPHP 5 能实现惰性加载的关键。
+
+
+
 
