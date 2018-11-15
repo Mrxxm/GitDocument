@@ -37,7 +37,7 @@ mysql> repair table myIsam;
 1 row in set (0.10 sec)
 ```
 
-window2
+window2 (查看MyISAM系统表文件)
 
 ```
 [root@kenrou test]# pwd

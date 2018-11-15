@@ -34,7 +34,9 @@
 
 #### 超高的QPS和TPS
 
-风险：效率低下的SQL
+风险：
+
+* 效率低下的SQL
 
 Mysql还不支持多cpu并发运算(每一个sql只能用到一个cpu)
 
@@ -61,13 +63,17 @@ QPS <= 10
 
 #### 磁盘IO
 
-风险：磁盘IO性能突然下降(热数据远远大于服务器可用内存的情况下)[使用更快的磁盘设备]
+风险：
+
+* 磁盘IO性能突然下降(热数据远远大于服务器可用内存的情况下)[使用更快的磁盘设备]
 
 其他大量消耗磁盘性能的计划任务(调整计划任务，做好磁盘维护)
 
 #### 网卡流量
 
-风险：网卡IO被占满(1000Mb/8≈100MB)[1.bit就是位，也叫比特位，是计算机表示数据最小的单位 2.byte就是字节 3.1byte=1B 4.1byte=8bit 1000兆是小b相当于1000个位]
+风险：
+
+* 网卡IO被占满(1000Mb/8≈100MB)[1.bit就是位，也叫比特位，是计算机表示数据最小的单位 2.byte就是字节 3.1byte=1B 4.1byte=8bit 1000兆是小b相当于1000个位]
 
 如何避免无法连接数据库的情况：
 
@@ -177,7 +183,7 @@ mysql> show variables like '%iso%';
 1 row in set (0.02 sec)
 ```
 
-* window1
+* window1 (测试第三种隔离级别)
 
 ```sql
 mysql> select * from class;
@@ -224,7 +230,7 @@ mysql> select * from class where num < 5;
 1 row in set (0.00 sec)
 ```
 
-* window2
+* window2 (测试第三种隔离级别)
 
 ```sql
 mysql> select * from class;
@@ -263,7 +269,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 修改隔离级别后操作
 
-* window1
+* window1 (测试第二种隔离级别)
 
 ```sql
 ## 设置隔离级别(已提交读)
@@ -304,7 +310,7 @@ mysql> select * from class where num < 5;
 3 rows in set (0.00 sec)
 ```
 
-* window2
+* window2 (测试第二种隔离级别)
 
 ```sql
 mysql> begin;
