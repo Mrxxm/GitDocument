@@ -110,6 +110,14 @@
 
 `$ git checkout -b feature/refactor-3 remotes/origin/feature/refactor-3`
 
+## 查看是从哪个分支切出来的
+
+`$ git reflog --date=local | grep 分支名`
+
+## 查看git log的图
+
+`$ git log --graph --all --decorate`
+
 ## 实例
 
 ![](https://cdn.liaoxuefeng.com/cdn/files/attachments/001384907702917346729e9afbf4127b6dfbae9207af016000/0)
