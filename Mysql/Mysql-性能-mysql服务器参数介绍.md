@@ -19,12 +19,12 @@ Default options are read from the following files in the given order:
 
 Mysql配置参数的作用域
 
-* 全局参数
-`set global 参数名 = 参数值;`
+* 全局参数  
+`set global 参数名 = 参数值;`  
 `set @@global.参数名 := 参数值;`
 
-* 会话参数
-`set [session] 参数名 = 参数值;`
+* 会话参数  
+`set [session] 参数名 = 参数值;`  
 `set @@session.参数名 := 参数值;`
 
 window1 (设置完全局参数后，需要重新退出后再进入才生效)
