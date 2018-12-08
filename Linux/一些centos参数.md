@@ -17,5 +17,141 @@
 * 查看本地内网地址
 
 `# ip addr`
+
 `# ifconfig`
 
+* `>、>>、<`区别
+
+`>> 是追加内容`
+
+`> 是覆盖原有内容`
+
+`< 是输入`
+
+* 导出所有数据库
+
+`# mysqldump -uroot -p --all-databases > 1.sql`
+
+* 导出db1、db2两个数据库
+
+`# mysqldump -uroot -p --databases db1 db2 > 1.sql`
+
+* 导出数据表
+
+`# mysqldump -uroot -p database table > 1.sql`
+
+* 导出数据库逻辑备份 (`--master-data` 用于记录在备份时主库当前二进制日志文件偏移量的信息,`CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000006', MASTER_LOG_POS=674;`)
+
+`# mysqldump --master-data --single-transaction -uroot -p database > 1.sql`
+
+
+* 导出配置了GTID复制备份数据库 (`--set-gtid-purged=off` 忽略GTID)
+
+`# mysqldump -uroot --set-gtid-purged=off -p desired_life > 1.sql`
+
+* 导出参数说明
+
+`--single-transaction` : 为了保证事务的一致性
+
+`--routines`：导出存储过程以及自定义函数  
+
+`--triggers`：导出触发器。该选项默认启用，用`--skip-triggers`禁用它
+
+
+* 传递到另一台服务器
+
+`# scp 1.sql root@119.29.196.*:/root`
+
+* 导入数据到数据库
+
+`# mysql -uroot -p database < all3.sql`
+
+* 生成ssh公钥 (需进入`~/.ssh`目录)
+
+`[.ssh]# ssh-keygen`
+
+* 配置ssh免密登录
+
+`# ssh-copy-id -i ~/.ssh/id_rsa.pub root@47.93.233.9`
+
+---
+
+#### centos卸载Mysql
+
+* yum方式安装的mysql
+
+```
+# 第一步
+[root@HUGE_DICK_MAN ~]# yum remove mysql mysql-server mysql-libs compat-mysql51
+
+# 第二步
+[root@HUGE_DICK_MAN ~]# rm -rf /var/lib/mysql
+
+# 第三步
+[root@HUGE_DICK_MAN ~]# rm /etc/my.cnf
+```
+
+--- 
+
+#### centos通过yum安装mysql5.7
+
+* 查看进程
+
+`# sudo lsof -nP -iTCP -sTCP:LISTEN`
+
+```
+# 1.下载配置mysql的yum源的rpm包
+# wget https://dev.mysql.com/get/mysql57-community-release-el6-9.noarch.rpm
+
+# 2.安装用来配置mysql的yum源的rpm包
+# rpm -Uvh mysql57-community-release-el6-9.noarch.rpm
+
+# 3.查看rpm包
+# cd /etc/yum.repos.d/
+# ll
+-rw-r--r-- 1 root root 1414 9月  12 2016 mysql-community.repo
+-rw-r--r-- 1 root root 1440 9月  12 2016 mysql-community-source.repo
+
+# 4.安装mysql
+# yum install mysql-community-server
+
+# 5.开启Mysql服务
+# service mysqld start 
+或
+# sudo /usr/sbin/mysqld --user=root
+
+# 6.查看密码
+# grep 'temporary password' /var/log/mysqld.log
+
+# 7.进入数据库
+# mysql -uroot -p 
+
+# 8.修改密码
+> ALTER USER 'root'@'localhost' IDENTIFIED BY 'Xxm&***';
+
+```
+
+遇到的报错
+
+* 需要：`libsasl2.so.2()(64bit)`
+
+```
+# 解决办法
+# 修改/etc/yum.repos.d/mysql-community.repo 源文件
+[mysql57-community]
+name=MySQL 5.7 Community Server
+## baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/6/$basearch/   
+baseurl=http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+```
+
+* MySQL 5.7 中 `Your password does not satisfy the current policy requirements.` 问题
+
+```
+# 解决办法
+> set global validate_password_policy=0;  
+> set global validate_password_length=4;
+> set password for 'root'@'localhost'=password('***');
+```
