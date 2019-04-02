@@ -262,11 +262,10 @@ Existing Git repository
 在执行这段脚本前，你需要准备的信息：
 
 1. Mac、Linux下打开Terminal，Windows下打开命令提示符（command prompt）。
-2. 给你的repo创建一个全新的clone。
+2. 进入项目目录下，给你的repo创建一个全新的clone。
 
 	```
-	➜ git clone --bare https://github.com/user/repo.git
-	➜ cd repo.git
+	➜ git clone --bare https://github.com/Mrxxm/repo.git
 	```
 3. 创建脚本文件，并添加权限。
 	
