@@ -144,3 +144,22 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDHUaIO7BYVrGC31S51pRFTG4/P5yAAMy+F47fHroz/
 对于利用公钥登录，对其他用户配置执行权限是没有问题的。
 但是对于git，公钥和私钥, 以及config等相关文件的权限，其他用户不可有任何权限。
 ```
+
+## ssh-keygen的-C后面的邮箱有什么用
+
+`The email is only optional field to identify the key. `
+
+邮箱仅仅是识别用的key
+
+`-t = The type of the key to generate `
+
+密钥的类型 
+
+`-C = comment to identify the key `
+
+用于识别这个密钥的注释 
+
+`So the Comment is for you only and you can put anything inside. 
+Many sites and software are using this comment as the key name. `
+
+所以这个注释你可以输入任何内容，很多网站和软件用这个注释作为密钥的名字
