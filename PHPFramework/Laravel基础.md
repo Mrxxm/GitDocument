@@ -466,8 +466,115 @@ Student::destroy([10, 12]);
 Student::where('id', '>', '10')->delete();
 ```
 
+#### Artisan控制台
+
+* php artisan
+
+* php artisan list
+
+创建控制器
+
+* php artisan make:controller UserController
+
+创建模型
+
+* php artisan make:model User
+
+创建中间件
+
+* php artisan make:middleware Activity
+
+创建迁移文件
+
+* php artisan make:migration create_student_table --create=students
+
+创建模型同时创建迁移文件
+
+* php artisan make:model Article -m 
+
+执行迁移文件
+
+* php artisan migrate
+
+数据填充
+
+* php artisan make:seeder StudentTableSeeder
+
+执行单个数据填充文件
+
+* php artisan db:seed --class=StudentTableSeeder
+
+#### 缓存
+
+保存对象到缓存中
+
+* put() 
+
+```
+Cache::put('key', 'val', 有效期(单位分));
+```
+
+添加缓存(如果key存在添加失败，不存在则成功)，用法与put相同，会返回一个布尔值。
+
+* add()
+
+永久保存对象到缓存中
+
+* forever()
+
+```
+Cache::forever('key', 'val');
+```
+
+判断一个key值是否存在
+
+* has()
+
+```
+Cache::has('key');
+```
+
+从缓存中获取对象
+
+* get()
+
+```
+Cache::get('key');
+```
+
+取出缓存并删除
+
+* pull()
+
+```
+Cache::pull('key');
+```
+
+从缓存中删除对象，返回布尔值
+
+* forget()
+
+```
+Cache::forget('key');
+```
+
+配置文件
+
+config/cache.php
 
 
+#### 日志
 
+* debug模式
+
+配置文件
+
+config/app.php
+
+本地开发`APP_DEBUG`环境变量为true，上线后配置为false。
+
+* http异常
+
+* 日志
 
 
