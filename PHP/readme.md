@@ -63,9 +63,9 @@ php.ini设置 `request_order = “GP”` 后者覆盖前者 post数据与get数�
 `$_SERVER[‘REMOTE_IP’]`:获取访问者的IP地址。  
 `$_SERVER[’SERVER_IP’]`:获取服务器IP地址。  
 `$_SERVER[’SERVER_NAME’]`:获取服务器名字。  
-`$_SERVER[’DOCUMENT_ROOT’]`:获取站点真是物理地址。  
-`$_SERVER[’PHP_SELF’]`:获取当前网页地址。  
-`$_SERVER[’SCRIPT_FILENAME’]`:获取网页地址物理路径。  
+`$_SERVER[’DOCUMENT_ROOT’]`:获取站点真是物理地址,例：`/var/www`。  
+`$_SERVER[’PHP_SELF’]`:获取当前网页地址,例：`/test2.php`。  
+`$_SERVER[’SCRIPT_FILENAME’]`:获取网页地址物理路径,例：`/private/var/www/test2.php`。  
 `$_SERVER[’QUERY_STRING’]`:获取当前网页地址中所有get数据。  
 
 * `$GLOBALS`  
