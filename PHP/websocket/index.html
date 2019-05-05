@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>聊天室 - 慕课网</title>
+<link rel="shortcut icon" href="favicon.png">
+<link rel="icon" href="favicon.png" type="image/x-icon">
+<link type="text/css" rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(e) {
+      var me = prompt("给自己取一个好听的名字吧!");
+      if(!me){
+        me = "匿名";
+      }
+
+      //websocket开始
+      if(window.WebSocket){
+        var webSocket = new WebSocket("ws://127.0.0.1:9502");
+
+        webSocket.onopen = function (event) {
+
+        };
+
+        webSocket.onmessage = function (event) {
+          msg = JSON.parse(event.data);
+
+          username = msg.username;
+          content = msg.message;
+          avatar = msg.avatar;
+          now = msg.now;
+          var htmlData =   '<div class="msg_item fn-clear">'
+                  + '   <div class="uface"><img src="images/' + avatar + '.jpg" width="40" height="40"  alt=""/></div>'
+                  + '   <div class="item_right">'
+                  + '     <div class="msg own">' + content + '</div>'
+                  + '     <div class="name_time">' + username + ' ·' + now +' </div>'
+                  + '   </div>'
+                  + '</div>';
+          $("#message_box").append(htmlData);
+          $('#message_box').scrollTop($("#message_box")[0].scrollHeight + 20);
+        }
+
+        var sendMessage = function(){
+          content = $("#message").val();
+          webSocket.send('{"username":"'+me+'","message":"'+content+'"}');
+          $("#message").val('');
+        }
+      }else{
+        console.log("您的浏览器不支持WebSocket");
+      }
+
+      $('.sub_but').click(function(event){
+        sendMessage();
+      });
+
+    });
+  </script>
+</head>
+
+<body>
+<div class="chatbox">
+  <div class="chat_top fn-clear">
+    <div class="logo"><img src="images/logo.png" width="120"  alt=""/></div>
+    <div class="uinfo fn-clear">
+
+    </div>
+  </div>
+  <div class="chat_message fn-clear">
+    <div class="chat_left">
+      <div class="message_box" id="message_box">
+
+      </div>
+      <div class="write_box scon_con">
+        <div class="scon_left">
+            <textarea id="message" name="message" class="write_area" placeholder="说点啥吧..."></textarea>
+            <input type="hidden" name="fromname" id="fromname" value="河图" />
+            <input type="hidden" name="to_uid" id="to_uid" value="0">
+        </div>
+        <div class="scon_right">
+            <div class="expression"></div>
+            <button name="" class="sub_but">提 交</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
