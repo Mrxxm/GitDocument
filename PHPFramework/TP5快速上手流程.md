@@ -1,5 +1,5 @@
 ## 安装
-#### 2-3 下载TP5
+### 2-3 下载TP5
 
 下载文档链接：
 
@@ -8,7 +8,7 @@
 需要下载两个文件：一个是TP5框架的目录文件项目，一个是核心框架项目。需要将核心框架项目剪切到目录文件项目下，并且重命名为`thinkphp`。
 
 ## `URL`&路由
-#### 2-9 `PATH_INFO` `URL`路径模式解析
+### 2-9 `PATH_INFO` `URL`路径模式解析
 
 * TP5默认的url模式：`http://serverName/index.php/module/controller/action/[param/value...]`
 
@@ -19,7 +19,7 @@
 
 * 兼容模式：`http://serverName/index.php?s=module/controller/action/p/v`
 
-#### 3-1 多模块与模块命名空间
+### 3-1 多模块与模块命名空间
 
 一个应用下面可以包含多个模块(默认index模块)，可以在`application`目录下创建新的文件夹，即定义了一个新的模块。
 
@@ -68,7 +68,7 @@ location ~ \.php(.*)$ {
 
 修改完1，2两点，即可访问成功。
 
-#### 3-4 三种URL访问模式
+### 3-4 三种URL访问模式
 
 TP5默认是**配置式**的路由方式。
 
@@ -112,7 +112,7 @@ TP5默认使用混合模式(`Route.php`配置文件)：
 'url_route_must'         => false,
 ```
 
-#### 3-5 定义路由
+### 3-5 定义路由
 
 完整路由定义格式：
 
@@ -134,7 +134,7 @@ Route:get('hello', 'sample/xxm/hello');
 
 ## 获取参数
 
-#### 3-6 获取请求参数
+### 3-6 获取请求参数
 
 ##### 控制器获取参数三种方式
 
@@ -302,7 +302,7 @@ NO.1 hello xxm age：24
 
 ## 验证层
 
-#### 4-3 Validate：独立验证
+### 4-3 Validate：独立验证
 
 * 独立验证
 
@@ -328,7 +328,7 @@ var_dump($validate->getError());
  */
 ```
 
-#### 4-4 Validate 验证器
+### 4-4 Validate 验证器
 
 * 验证器`TestValidate`
 
@@ -364,7 +364,7 @@ var_dump($testValidate->getError());
  */
 ```
 
-#### 4-6 自定义验证规则
+### 4-6 自定义验证规则
 
 控制器调用`check`方法，自动调用自定义的验证方法
 
@@ -412,7 +412,7 @@ class Banner
 }
 ```
 
-#### 4-7 构建接口参数校验层
+### 4-7 构建接口参数校验层
 
 创建`BaseValidate`类(继承`Validate`)
 
@@ -499,7 +499,7 @@ class Banner
 
 ## 全局异常处理
 
-#### 6-3 总结异常的分类
+### 6-3 总结异常的分类
 
 **用户操作导致的异常(没有通过验证器...)**
 
@@ -511,7 +511,7 @@ class Banner
 * 记录日志
 * 不向客户端返回具体原因
 
-#### 6-4 实现自定义全局异常处理 上
+### 6-4 实现自定义全局异常处理 上
 
 
 * 修改`config`配置,指定到重写的子类中
@@ -542,7 +542,7 @@ class ExceptionHandle extends Handle
 
 异常抛出到全局，都会经过render方法处理。
 
-#### 6-5 实现自定义全局异常处理 下
+### 6-5 实现自定义全局异常处理 下
 
 #### 重写render方法
 
@@ -608,7 +608,7 @@ class ExceptionHandle extends Handle
 }
 ```
 
-#### 6-6 日志系统
+### 6-6 日志系统
 
 ##### 自动记录日志功能
 
@@ -620,7 +620,7 @@ class ExceptionHandle extends Handle
 define('LOG_PATH', __DIR__ . '/../logs/');
 ```
 
-#### 6-7 在全局异常处理中加入日志记录
+### 6-7 在全局异常处理中加入日志记录
 
 ##### 关闭TP5默认日志行为
 
@@ -643,7 +643,7 @@ private function recordErrorLog(Exception $e)
 
 根据6-3中的分类，在`ExceptionHandle.php`文件中的系统异常调用该方法。
 
-#### 6-8 全局异常处理的应用 上
+### 6-8 全局异常处理的应用 上
 
 本章针对服务器错误处理显示，根据客户端、服务器，返回报错信息的不同。客户端/客户需要一个简单的
 `json`数据，服务端/开发人员希望得到页面报错(TP5默认页面报错，需要调试)
@@ -786,7 +786,7 @@ public function goCheck()
 }
 ```
 
-#### 6-9 全局异常处理的应用 中
+### 6-9 全局异常处理的应用 中
 
 ##### 细节修改(对自定义异常基类`BaseException`编写构造方法)
 
@@ -851,7 +851,7 @@ class BaseValidate extends Validate
 }
 ```
 
-#### 6-10 全局异常处理的应用 下
+### 6-10 全局异常处理的应用 下
 
 验证器需要验证多个参数时，需要使用`batch`方法。
 
@@ -882,7 +882,7 @@ class BaseValidate extends Validate
 
 ## ORM
 
-#### 7-1 数据库操作三种方式之原生SQL
+### 7-1 数据库操作三种方式之原生SQL
 
 ```
 class Banner
@@ -895,7 +895,7 @@ class Banner
 }
 ```
 
-#### 7-4 查询构造器 一
+### 7-4 查询构造器 一
 
 
 * `find`  单条记录,一维数组
@@ -914,7 +914,7 @@ public static function getBannerByID($id)
 }
 ```
 
-#### 7-6 查询构造器 三
+### 7-6 查询构造器 三
 
 `where('字段名'， '表达式'， '查询条件')`
 
@@ -926,7 +926,7 @@ public static function getBannerByID($id)
 })
 ```
 
-#### 7-7 开启SQL日志记录
+### 7-7 开启SQL日志记录
 
 `fetchSql()`输出sql
 
@@ -952,7 +952,7 @@ $result = Db::table('banner_item')
 ]);
 ```
 
-#### 7-12 几种查询动词的总结与ORM性能问题的探讨
+### 7-12 几种查询动词的总结与ORM性能问题的探讨
 
 TP5框架查询
 
@@ -970,7 +970,7 @@ Laravel框架查询
 * `find()`  一条数据(模型)
 * `all()`   一组数据(模型)
 
-#### 8-2 模型关联
+### 8-2 模型关联
 
 ##### 一对多
 
@@ -1000,7 +1000,7 @@ $banner = BannerModel::with('items')->find($id);
 {"id":1,"name":"首页置顶","description":"首页轮播图","delete_time":null,"update_time":"1970-01-01 08:00:00","items":[{"id":1,"img_id":65,"key_word":"6","type":1,"delete_time":null,"banner_id":1,"update_time":"1970-01-01 08:00:00"},{"id":2,"img_id":2,"key_word":"25","type":1,"delete_time":null,"banner_id":1,"update_time":"1970-01-01 08:00:00"},{"id":3,"img_id":3,"key_word":"11","type":1,"delete_time":null,"banner_id":1,"update_time":"1970-01-01 08:00:00"},{"id":5,"img_id":1,"key_word":"10","type":1,"delete_time":null,"banner_id":1,"update_time":"1970-01-01 08:00:00"}]}
 ```
 
-#### 8-3 模型关联-嵌套关联查询
+### 8-3 模型关联-嵌套关联查询
 
 ##### 一对多对一
 
@@ -1030,7 +1030,7 @@ class BannerItem extends Model
 $banner = BannerModel::with(['items', 'items.img'])->find($id);
 ```
 
-#### 8-4 隐藏模型字段
+### 8-4 隐藏模型字段
 
 封装，将模型获取数据方法封装到静态方法中，不暴露在控制器中
 
@@ -1060,7 +1060,7 @@ public static function getBannerByID($id)
 
 `$banner->visible(['id', 'update_time']);`
 
-#### 8-5 在模型内部隐藏字段
+### 8-5 在模型内部隐藏字段
 
 在模型内部定义成员变量
 
@@ -1068,7 +1068,7 @@ public static function getBannerByID($id)
 
 `protected $visible = ['id'];`
 
-#### 8-6 图片资源`URL`配置
+### 8-6 图片资源`URL`配置
 
 扩展配置文件目录 (自定义的配置文件能够被TP5框架自动加载)
 
@@ -1089,7 +1089,7 @@ return [
 ];
 ```
 
-#### 8-7 读取器的巧妙应用
+### 8-7 读取器的巧妙应用
 
 读取器定义规范：
 
@@ -1138,7 +1138,7 @@ $image = new Image();
 $image->url;
 ```
 
-#### 8-8 自定义模型基类
+### 8-8 自定义模型基类
 
 
 定义`baseModel.php`,将通用方法定义在基类中
@@ -1175,13 +1175,13 @@ class Image extends BaseModel
 
 ```
 
-#### 8-9 定义API版本号
+### 8-9 定义API版本号
 
 版本号改成动态的
 
 `Route::get('api/:version/banner/:id', 'api/:version.Banner/getBanner');`
 
-#### 8-12 接口验证与重构
+### 8-12 接口验证与重构
 
 需要传入多个ID进行验证。
 
@@ -1217,7 +1217,7 @@ class IDCollection extends BaseValidate
 }
 ```
 
-#### 8-14 开启路由完整匹配模式
+### 8-14 开启路由完整匹配模式
 
 处理进入主题后，详情展示`product`信息，`Theme`表和`Product`表多对多的关系
 
@@ -1242,7 +1242,7 @@ Route::get('api/:version/theme/:id', 'api/:version.Theme/getComplexOne');
 route_complete_match => true
 ```
 
-#### 8-19 使用数据集还是数组？
+### 8-19 使用数据集还是数组？
 
 ```
 // 数据封装成对象
@@ -1265,7 +1265,7 @@ $result = $collection->hidden(['summary']);
 $result->isEmpty();
 ```
 
-#### 8-21 扩展：接口粒度与接口分层
+### 8-21 扩展：接口粒度与接口分层
 
 首页显示，需要调用三个接口分别是 `banner` `theme` `product`
 
