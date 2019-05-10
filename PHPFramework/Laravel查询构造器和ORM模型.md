@@ -98,7 +98,7 @@ const CREATE_AT = 'create_at';
 
 * 参数分别是 模型名 字表外键名 和 主表外键名
 
-一本书中有一张借阅卡
+一本书中有一张借阅卡(`bookCard`表中定义外键`book_id`)
 
 ```
 // Book 模型
@@ -138,9 +138,10 @@ dd($res->toArray());
 
 * 使用`hasMany()`和`belongsTo()`定义关联关系
 
-一张图书借阅卡上有多条借阅记录
+一张图书借阅卡上有多条借阅记录(`BookBorrowHistory`表中定义外键`book_card_id`)
 
 ```
+// bookCard模型
 public function BookBorrowHistory()
 {
     return $this->hasMany(BookBorrowHistory::class);
@@ -150,6 +151,7 @@ public function BookBorrowHistory()
 一条借阅记录只属于一张借阅卡
 
 ```
+// BookBorrowHistory模型
 public function bookCard()
 {
     return $this->belongsTo(BookCard::class);
