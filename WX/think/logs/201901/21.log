@@ -1,0 +1,39 @@
+[ 2019-01-21T08:58:24+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/theme/1
+[ log ] www.think.com/api/v1/theme/1 [运行时间：0.388999s][吞吐率：2.57req/s] [内存消耗：2,643.35kb] [文件加载：47]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000731s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme` [ RunTime:0.097740s ]
+[ sql ] [ SQL ] SELECT * FROM `theme` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.001792s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.010985s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme_product` [ RunTime:0.004672s ]
+[ sql ] [ SQL ] SELECT `product`.*,pivot.theme_id AS pivot__theme_id,pivot.product_id AS pivot__product_id FROM `product` INNER JOIN `theme_product` `pivot` ON `pivot`.`product_id`=`product`.`id` WHERE  `pivot`.`theme_id` = 1 [ RunTime:0.004810s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.007145s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 16 [ RunTime:0.000444s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 49 [ RunTime:0.000365s ]
+
+---------------------------------------------------------------
+[ 2019-01-21T08:59:09+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/theme/2
+[ log ] www.think.com/api/v1/theme/2 [运行时间：0.167660s][吞吐率：5.96req/s] [内存消耗：2,643.36kb] [文件加载：47]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000605s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme` [ RunTime:0.002821s ]
+[ sql ] [ SQL ] SELECT * FROM `theme` WHERE  `id` = 2 LIMIT 1 [ RunTime:0.001159s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.006648s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme_product` [ RunTime:0.004857s ]
+[ sql ] [ SQL ] SELECT `product`.*,pivot.theme_id AS pivot__theme_id,pivot.product_id AS pivot__product_id FROM `product` INNER JOIN `theme_product` `pivot` ON `pivot`.`product_id`=`product`.`id` WHERE  `pivot`.`theme_id` = 2 [ RunTime:0.000599s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.017840s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 17 [ RunTime:0.000387s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 50 [ RunTime:0.000381s ]
+
+---------------------------------------------------------------
+[ 2019-01-21T08:59:18+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/theme/1
+[ log ] www.think.com/api/v1/theme/1 [运行时间：0.068185s][吞吐率：14.67req/s] [内存消耗：2,643.36kb] [文件加载：47]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000618s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme` [ RunTime:0.006136s ]
+[ sql ] [ SQL ] SELECT * FROM `theme` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000468s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.004779s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme_product` [ RunTime:0.005358s ]
+[ sql ] [ SQL ] SELECT `product`.*,pivot.theme_id AS pivot__theme_id,pivot.product_id AS pivot__product_id FROM `product` INNER JOIN `theme_product` `pivot` ON `pivot`.`product_id`=`product`.`id` WHERE  `pivot`.`theme_id` = 1 [ RunTime:0.000596s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.016374s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 16 [ RunTime:0.000663s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` = 49 [ RunTime:0.000492s ]
+
+---------------------------------------------------------------

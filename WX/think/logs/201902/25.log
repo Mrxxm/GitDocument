@@ -1,0 +1,51 @@
+[ 2019-02-25T13:41:48+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/token/user?XDEBUG_SESSION_START=15454
+[ log ] www.think.com/api/v1/token/user?XDEBUG_SESSION_START=15454 [运行时间：0.688448s][吞吐率：1.45req/s] [内存消耗：2,546.06kb] [文件加载：47]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000784s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.004982s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `openid` = 'oZ3xJ5EHnziqClSP5NzZJ7veM2r8' LIMIT 1 [ RunTime:0.001170s ]
+
+---------------------------------------------------------------
+[ 2019-02-25T13:44:33+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/address
+[ log ] www.think.com/api/v1/address [运行时间：0.123005s][吞吐率：8.13req/s] [内存消耗：2,646.05kb] [文件加载：51]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000632s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.001428s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000425s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.043326s ]
+[ sql ] [ SQL ] INSERT INTO `user_address` (`name` , `mobile` , `province` , `city` , `country` , `detail` , `user_id`) VALUES ('DoubleX-man' , '18888888888' , '浙江' , '杭州' , '萧山' , '戈雅公寓' , 1) [ RunTime:0.002937s ]
+
+---------------------------------------------------------------
+[ 2019-02-25T13:48:13+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/address
+[ log ] www.think.com/api/v1/address [运行时间：0.048189s][吞吐率：20.75req/s] [内存消耗：2,682.97kb] [文件加载：51]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000524s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.000728s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000410s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.000828s ]
+[ sql ] [ SQL ] SELECT * FROM `user_address` WHERE  `user_id` = 1 LIMIT 1 [ RunTime:0.000505s ]
+
+---------------------------------------------------------------
+[ 2019-02-25T13:48:21+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/address
+[ log ] www.think.com/api/v1/address [运行时间：0.058115s][吞吐率：17.21req/s] [内存消耗：2,642.49kb] [文件加载：51]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000503s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002760s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.001320s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.014995s ]
+[ sql ] [ SQL ] SELECT * FROM `user_address` WHERE  `user_id` = 1 LIMIT 1 [ RunTime:0.001145s ]
+[ sql ] [ SQL ] UPDATE `user_address`  SET `mobile`='18888888887'  WHERE  `id` = 1 [ RunTime:0.001225s ]
+
+---------------------------------------------------------------
+[ 2019-02-25T15:53:26+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/token/user?XDEBUG_SESSION_START=15454
+[ log ] www.think.com/api/v1/token/user?XDEBUG_SESSION_START=15454 [运行时间：0.474213s][吞吐率：2.11req/s] [内存消耗：2,546.79kb] [文件加载：48]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000621s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.002906s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `openid` = 'oZ3xJ5EHnziqClSP5NzZJ7veM2r8' LIMIT 1 [ RunTime:0.001408s ]
+
+---------------------------------------------------------------
+[ 2019-02-25T15:53:42+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/address
+[ log ] www.think.com/api/v1/address [运行时间：0.082178s][吞吐率：12.17req/s] [内存消耗：2,991.92kb] [文件加载：58]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000550s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.000753s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000497s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.001493s ]
+[ sql ] [ SQL ] SELECT * FROM `user_address` WHERE  `user_id` = 1 LIMIT 1 [ RunTime:0.000519s ]
+
+---------------------------------------------------------------

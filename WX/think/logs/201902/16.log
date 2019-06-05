@@ -1,0 +1,23 @@
+[ 2019-02-16T14:03:44+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/product/2
+[ log ] www.think.com/api/v1/product/2 [运行时间：0.343186s][吞吐率：2.91req/s] [内存消耗：2,611.70kb] [文件加载：47]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001220s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.004063s ]
+[ sql ] [ SQL ] SELECT * FROM `product` WHERE  `id` = 2 LIMIT 1 [ RunTime:0.002052s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product_image` [ RunTime:0.000836s ]
+[ sql ] [ SQL ] SELECT * FROM `product_image` WHERE  `product_id` = 2 [ RunTime:0.000686s ]
+
+---------------------------------------------------------------
+[ 2019-02-16T14:15:30+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/product/recent
+[ log ] www.think.com/api/v1/product/recent [运行时间：0.170663s][吞吐率：5.86req/s] [内存消耗：2,501.09kb] [文件加载：44]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000691s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.001946s ]
+[ sql ] [ SQL ] SELECT * FROM `product` ORDER BY create_time desc LIMIT 15 [ RunTime:0.000591s ]
+
+---------------------------------------------------------------
+[ 2019-02-16T14:22:21+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/product/recent
+[ log ] www.think.com/api/v1/product/recent [运行时间：0.129006s][吞吐率：7.75req/s] [内存消耗：2,505.84kb] [文件加载：44]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000507s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.003555s ]
+[ sql ] [ SQL ] SELECT * FROM `product` ORDER BY create_time desc LIMIT 15 [ RunTime:0.000679s ]
+
+---------------------------------------------------------------

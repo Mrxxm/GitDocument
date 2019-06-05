@@ -1,0 +1,102 @@
+[ 2019-02-26T14:37:52+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/token/user?XDEBUG_SESSION_START=15454
+[ log ] www.think.com/api/v1/token/user?XDEBUG_SESSION_START=15454 [运行时间：0.644123s][吞吐率：1.55req/s] [内存消耗：2,615.56kb] [文件加载：48]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001798s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.009901s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `openid` = 'oZ3xJ5EHnziqClSP5NzZJ7veM2r8' LIMIT 1 [ RunTime:0.001653s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:31:39+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/token/user?XDEBUG_SESSION_START=15454
+[ log ] www.think.com/api/v1/token/user?XDEBUG_SESSION_START=15454 [运行时间：0.450973s][吞吐率：2.22req/s] [内存消耗：2,615.53kb] [文件加载：48]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000818s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user` [ RunTime:0.003179s ]
+[ sql ] [ SQL ] SELECT * FROM `user` WHERE  `openid` = 'oZ3xJ5EHnziqClSP5NzZJ7veM2r8' LIMIT 1 [ RunTime:0.001664s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:39:28+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.617898s][吞吐率：1.62req/s] [内存消耗：2,688.20kb] [文件加载：50]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.004548s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.003915s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000755s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.005503s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.001643s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.000485s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.005424s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (65,2,3,1) [ RunTime:0.000630s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:39:55+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1?XDEBUG_SESSION_START=13407
+[ log ] www.think.com/api/v1/banner/1?XDEBUG_SESSION_START=13407 [运行时间：0.534977s][吞吐率：1.87req/s] [内存消耗：2,687.91kb] [文件加载：50]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001509s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.013293s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.003007s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.006102s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.001921s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.001895s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.008305s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (65,2,3,1) [ RunTime:0.002168s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:41:22+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1?XDEBUG_SESSION_START=17911
+[ log ] www.think.com/api/v1/banner/1?XDEBUG_SESSION_START=17911 [运行时间：0.440495s][吞吐率：2.27req/s] [内存消耗：2,687.95kb] [文件加载：50]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.019850s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.006718s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000670s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.014780s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.000640s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.001203s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.014115s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (65,2,3,1) [ RunTime:0.002200s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:43:56+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1?XDEBUG_SESSION_START=15609
+[ log ] www.think.com/api/v1/banner/1?XDEBUG_SESSION_START=15609 [运行时间：0.509037s][吞吐率：1.96req/s] [内存消耗：2,687.95kb] [文件加载：50]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000926s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.002403s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.002013s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.018296s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.065129s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.000735s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.010975s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (65,2,3,1) [ RunTime:0.001685s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:45:57+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1?XDEBUG_SESSION_START=11274
+[ log ] www.think.com/api/v1/banner/1?XDEBUG_SESSION_START=11274 [运行时间：0.361040s][吞吐率：2.77req/s] [内存消耗：2,687.95kb] [文件加载：50]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000948s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.009305s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000712s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.002097s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.001794s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.000969s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.006297s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (65,2,3,1) [ RunTime:0.013533s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T21:47:11+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/order?XDEBUG_SESSION_START=11274
+[ log ] www.think.com/api/v1/order?XDEBUG_SESSION_START=11274 [运行时间：0.088700s][吞吐率：11.27req/s] [内存消耗：3,011.80kb] [文件加载：60]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000538s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.004932s ]
+[ sql ] [ SQL ] SELECT * FROM `product` WHERE  `id` IN (1,2) [ RunTime:0.000510s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.003952s ]
+[ sql ] [ SQL ] SELECT * FROM `user_address` WHERE  `user_id` = 1 LIMIT 1 [ RunTime:0.001197s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `order` [ RunTime:0.001394s ]
+[ sql ] [ SQL ] INSERT INTO `order` (`user_id` , `order_no` , `total_price` , `total_count` , `snap_img` , `snap_name` , `snap_address` , `snap_items`) VALUES (1 , 'C226888311006016' , 0.02 , 2 , 'http://www.think.com/images/product-vg@1.png' , '芹菜 半斤等' , '{\"name\":\"DoubleX-man\",\"mobile\":\"18888888887\",\"province\":\"\\u6d59\\u6c5f\",\"city\":\"\\u676d\\u5dde\",\"country\":\"\\u8427\\u5c71\",\"detail\":\"\\u6208\\u96c5\\u516c\\u5bd3\",\"update_time\":\"1970-01-01 08:00:00\"}' , '[{\"id\":1,\"haveStock\":true,\"count\":1,\"name\":\"\\u82b9\\u83dc \\u534a\\u65a4\",\"totalPrice\":0.01},{\"id\":2,\"haveStock\":true,\"count\":1,\"name\":\"\\u68a8\\u82b1\\u5e26\\u96e8 3\\u4e2a\",\"totalPrice\":0.01}]') [ RunTime:0.001639s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `order_product` [ RunTime:0.001298s ]
+[ sql ] [ SQL ] INSERT INTO `order_product` (`product_id` , `count` , `order_id`) VALUES (1 , 1 , 1) [ RunTime:0.000378s ]
+[ sql ] [ SQL ] INSERT INTO `order_product` (`product_id` , `count` , `order_id`) VALUES (2 , 1 , 1) [ RunTime:0.000192s ]
+
+---------------------------------------------------------------
+[ 2019-02-26T22:20:52+08:00 ] 127.0.0.1 127.0.0.1 POST /api/v1/order?XDEBUG_SESSION_START=11274
+[ log ] www.think.com/api/v1/order?XDEBUG_SESSION_START=11274 [运行时间：0.221355s][吞吐率：4.52req/s] [内存消耗：3,012.05kb] [文件加载：60]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000633s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `product` [ RunTime:0.003052s ]
+[ sql ] [ SQL ] SELECT * FROM `product` WHERE  `id` IN (1,2) [ RunTime:0.001161s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `user_address` [ RunTime:0.024945s ]
+[ sql ] [ SQL ] SELECT * FROM `user_address` WHERE  `user_id` = 1 LIMIT 1 [ RunTime:0.000561s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `order` [ RunTime:0.005797s ]
+[ sql ] [ SQL ] INSERT INTO `order` (`user_id` , `order_no` , `total_price` , `total_count` , `snap_img` , `snap_name` , `snap_address` , `snap_items` , `update_time` , `create_time`) VALUES (1 , 'C226908524264307' , 0.02 , 2 , 'http://www.think.com/images/product-vg@1.png' , '芹菜 半斤等' , '{\"name\":\"DoubleX-man\",\"mobile\":\"18888888887\",\"province\":\"\\u6d59\\u6c5f\",\"city\":\"\\u676d\\u5dde\",\"country\":\"\\u8427\\u5c71\",\"detail\":\"\\u6208\\u96c5\\u516c\\u5bd3\",\"update_time\":\"1970-01-01 08:00:00\"}' , '[{\"id\":1,\"haveStock\":true,\"count\":1,\"name\":\"\\u82b9\\u83dc \\u534a\\u65a4\",\"totalPrice\":0.01},{\"id\":2,\"haveStock\":true,\"count\":1,\"name\":\"\\u68a8\\u82b1\\u5e26\\u96e8 3\\u4e2a\",\"totalPrice\":0.01}]' , 1551190852 , 1551190852) [ RunTime:0.000703s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `order_product` [ RunTime:0.005118s ]
+[ sql ] [ SQL ] INSERT INTO `order_product` (`product_id` , `count` , `order_id`) VALUES (1 , 1 , 2) [ RunTime:0.000355s ]
+[ sql ] [ SQL ] INSERT INTO `order_product` (`product_id` , `count` , `order_id`) VALUES (2 , 1 , 2) [ RunTime:0.000169s ]
+
+---------------------------------------------------------------

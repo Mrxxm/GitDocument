@@ -1,0 +1,37 @@
+[ 2019-01-10T09:33:10+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.225448s][吞吐率：4.44req/s] [内存消耗：2,129.78kb] [文件加载：37]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.002971s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.000879s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `banner_id` = 1 [ RunTime:0.002079s ]
+
+---------------------------------------------------------------
+[ 2019-01-10T11:18:42+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.160392s][吞吐率：6.23req/s] [内存消耗：2,396.55kb] [文件加载：38]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001597s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.018872s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.001178s ]
+
+---------------------------------------------------------------
+[ 2019-01-10T11:22:22+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.312238s][吞吐率：3.20req/s] [内存消耗：2,396.55kb] [文件加载：38]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001541s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.012985s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.003944s ]
+
+---------------------------------------------------------------
+[ 2019-01-10T11:58:03+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.171466s][吞吐率：5.83req/s] [内存消耗：2,396.55kb] [文件加载：38]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001002s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.009550s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000803s ]
+
+---------------------------------------------------------------
+[ 2019-01-10T14:10:52+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/banner/1
+[ log ] www.think.com/api/v1/banner/1 [运行时间：0.469112s][吞吐率：2.13req/s] [内存消耗：2,412.30kb] [文件加载：39]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.001066s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner` [ RunTime:0.010046s ]
+[ sql ] [ SQL ] SELECT * FROM `banner` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000562s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `banner_item` [ RunTime:0.013025s ]
+[ sql ] [ SQL ] SELECT * FROM `banner_item` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.000917s ]
+
+---------------------------------------------------------------

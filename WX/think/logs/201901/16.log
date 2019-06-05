@@ -1,0 +1,14 @@
+[ 2019-01-16T09:00:23+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/theme?ids=1,2,3
+[ log ] www.think.com/api/v1/theme?ids=1,2,3 [运行时间：0.498299s][吞吐率：2.01req/s] [内存消耗：2,497.62kb] [文件加载：44]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.000562s ] mysql:dbname=zerg;host=127.0.0.1;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `theme` [ RunTime:0.003869s ]
+[ sql ] [ SQL ] SELECT * FROM `theme` WHERE  `id` IN (1,2,3) [ RunTime:0.001550s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `image` [ RunTime:0.002703s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (16,17,18) [ RunTime:0.001206s ]
+[ sql ] [ SQL ] SELECT * FROM `image` WHERE  `id` IN (49,50,18) [ RunTime:0.000454s ]
+
+---------------------------------------------------------------
+[ 2019-01-16T09:05:24+08:00 ] 127.0.0.1 127.0.0.1 GET /api/v1/theme/1
+[ log ] www.think.com/api/v1/theme/1 [运行时间：0.024324s][吞吐率：41.11req/s] [内存消耗：1,082.85kb] [文件加载：27]
+
+---------------------------------------------------------------
