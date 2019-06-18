@@ -60,8 +60,9 @@ nginx-1.12.1/html/index.html
 ···
 ```
  
-编译nginx  
-`# ./configure`
+编译`nginx` 并安装`http_ssl_module`模块
+ 
+`# ./configure --with-http_ssl_module`
  
 ```
 [root@VM_15_196_centos etc]# cd nginx-1.12.1/
