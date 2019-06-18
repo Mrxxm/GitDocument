@@ -94,6 +94,21 @@ Artisan基本使用
 查看php-fpm
 
 	ps aux|grep php-fpm
+	
+还需要开启并配置`php-fpm`
+
+* 复制：`/usr/local/php/etc/php-fpm.conf.default` 为 `php-fpm.conf` 并修改配置将 `pid = run/php-fpm.pid` 前面分号去掉
+
+* 复制：`/usr/local/php/etc/php-fpm.d/www.conf.default` 为 `www.conf` 并修改配置
+
+```
+user = nobody
+group =
+```
+
+* 开启：`/usr/local/php/sbin/php-fpm`
+
+
 ## linux 安装git
 
 yum install git
@@ -163,28 +178,33 @@ php 全局配置
 	# 中国镜像
 	composer config -g repo.packagist composer https://packagist.phpcomposer.com
 	
-## fpm
+	
+## 修改`.bash_profile`文件
 
-	cd /usr/local/php/etc
-	cp php-fpm.conf.default php-fpm.conf
-	
-	但实际运行 报了如下的错误
 
-	sudo /usr/local/php/sbin/php-fpm
-	
-	[02-Jan-2016 01:56:48] WARNING: Nothing matches the include pattern '/usr/local/php/etc/php-fpm.d/*.conf' from /usr/local/php/etc/php-fpm.conf at line 125.
-	
-	php/etc/php-fpm.d/*.conf' from /usr/local/php/etc/php-fpm.conf at line 125.
-	
-	[02-Jan-2016 01:55:33] ERROR: No pool defined. at least one pool section must be specified in config file
-	[02-Jan-2016 01:55:33] ERROR: failed to post process the configuration
-	[02-Jan-2016 01:55:33] ERROR: FPM initialization failed
-	
-	从最初的warning开始追起 大概知道是在/usr/local/php/etc/php-fpm.d/缺少了一个.conf文件 然后进入此目录
+```
+function nginx_start() {
 
-	发现有一个 www.conf.default 按照常识应该应该进行如下操作
-	
-	还会出现一个www用户问题 改成 nobody
+        /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+        echo -e "开启nginx服务"
+}
+
+function nginx_reload() {
+
+        /usr/local/nginx/sbin/nginx -s reload
+        echo -e "重启nginx服务"
+}
+
+function cat_tcp() {
+    echo -e "查看TCP进程"
+    sudo lsof -nP -iTCP -sTCP:LISTEN
+}
+
+function php_fpm_start() {
+         /usr/local/php-7.1.11/sbin/php-fpm
+        echo -e "开启php-fpm"
+}
+```
 
 
 ## 部署遇到的问题
