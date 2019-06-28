@@ -22,7 +22,7 @@
 	<form method="post" action="./form.php"> 
 		<p>验证码图片：
 			<img id="captcha_img" border="1" src="./captcha_cn.php?r=<?php echo rand(); ?>" width="200px" height="200px">
-			<a href="javascript:void(0)" onclick="document.getElementById('captcha_cn').src='./captcha_img.php?r=' + Math.random()">换一个?</a>
+			<a href="javascript:void(0)" onclick="document.getElementById('captcha_img').src='./captcha_cn.php?r=' + Math.random()">换一个?</a>
 		</p>
 		<p>请输入验证码内容：<input type="text" name="authcode" value="" /></p>
 		<p><input type="submit" value="提交" ></p>
