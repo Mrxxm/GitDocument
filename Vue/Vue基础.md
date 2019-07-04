@@ -754,5 +754,102 @@ template:'
 
 当将组件放在`<keep-alive>`标签中，点击后将不再调用`destory`两个方法,将会调用`active`两个方法。
 
+## Vue-获取DOM元素
+
+获取DOM元素：
+
+* 给控件绑定`ref`属性
+* 通过`$refs`获取原生`jsDom`对象
+* `ref`重名会覆盖
+* 给组件绑定`ref`属性，那么`this.$ref.xxx`获取的是当前的组件对象
+
+```
+<body>
+<div id="app"></div>
+<script type="text/javascript" src="./vue.js"></script>
+<script type="text/javascript">
+var App = {
+    template:'
+        <div>
+            <button ref="btn">按钮</button>
+        </div>
+    ',
+    created() {
+        console.log(this.$refs.bnt);
+    }
+}
+
+new Vue({
+    el:"#app",
+    data(){
+        return {
+        
+        }
+    },
+    template:'<App />',
+    components:{
+        App
+    }
+})
+</script>
+</body>
+```
+
+## Vue-给Dom元素添加事件的特殊情况
+
+在DOM更新之后，在`mounted()`中获取更新之后的DOM：
+
+* `$nextTick()`
+* `this.isShow = true;`：Dom更新
+* `this.$refs.input.focus();`：Dom更新之后，调用不到更新之后的Dom中的`focus()`方法
+* 回调函数使用箭头方法
+* 补充：更新之后的DOM也可以在`updated()`中获取
+
+```
+var App = {
+    data(){
+        return {
+            isShow:false
+        }
+    },
+    template:'
+        <div>
+            <input type="text" v-show="isShow" ref='input' />
+        </div>
+    ',
+    mounted() {
+        // Dom更新
+        this.isShow = true;
+        
+        // this.$refs.input.focus();
+        
+        //$nextTick() 是在DOM更新循环结束后执行回调函数，在修改数据之后使用此方法在回调中获取到更新之后的DOM
+        this.$nextTick(()=> {
+            // 获取焦点
+            this.$refs.input.focus();
+        })
+    }
+}
+```
+
+## 补充
+
+`$mount`来直接挂载：
+
+```
+new Vue({
+    // el:"#app",
+    
+    ···
+})
+```
+
+```
+new Vue({
+    ···
+}).$mount(document.querySelector('#app'));
+```
+
+
 
 
