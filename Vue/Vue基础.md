@@ -6,21 +6,50 @@
 
 * `$ npm install vue`
 
-引包:
+1.引包:
 
 * `<script type="text/javascript" src="./node_modules/vue/dist/vue.js"></script>`
 
-`Vue.js` 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 `DOM` 的系统：
+2.创建实例化对象:
 
-* 元素反转 `this.message.split('').reverse().join('')`
+* 可以在浏览器的控制台输入`Vue`指令，发现已经被挂载到`Window`上了
+
+* 控制台输出实例：
+
+```
+> Vue
+ƒ Vue (options) {
+    if (!(this instanceof Vue)
+    ) {
+      warn('Vue is a constructor and should be called with the `new` keyword');
+    }
+    this._init(options);
+  }
+```
+
+* 创建方法：
+
+
+```
+<script type="text/javascript">
+	new Vue({
+		el:'#app',   // 1.绑定的元素
+		data: {
+		},           // 2.data的value值，既可以是对象也可以是函数
+		template:'', // 3.如果template中定义内容，那么优先加载template，否则加载是#app的模板内容
+	})
+</script>
+```
+
+**`Vue.js`的模板语法`{{}}`双大括号来表示插值:**
+
+* 元素反转(插值符号中还可以加一些运算比如:元素反转)
 
 ```
 <div id="app">
-  {{ message }}
+  {{ message.split('').reverse().join('') }}
 </div>
-```
 
-```
 var app = new Vue({
   el: '#app',
   data: {
@@ -29,17 +58,32 @@ var app = new Vue({
 })
 ```
 
+`vue`的实例化对象，挂载了很多的属性值:
+
+```
+console.log(app.$el === document.getElementById('app')); // true
+```
+
+![](https://img3.doubanio.com/view/photo/l/public/p2563425422.jpg)
+
+设计模式：
+
+* `MVVM`(`Model` `View` `ViewModel`)
+* `Model`代表`data`属性
+* `View`代表`template`中的视图
+* `ViewModel`代表的是`{{}}`双花括号里面的插值
+
 ## Vue-模板语法-指令
 
 * 在`vue`中，以`v-xxx`开头的就叫指令
-* 指令封装了一些DOM行为，结合属性作为一个暗号
+* 指令封装了一些`DOM`行为，`vue`帮我们完成了`DOM`操作
 
 
 常用的指令：
 
 * `v-text`:`innerText`
 * `v-html`:`innerHTML`
-* `v-if`:判断(对页面的内存消耗更大比起`v-show`)
+* `v-if`:`appendChild()`,`removeChild()`(对页面的内存消耗更大比起`v-show`。因为需要重新渲染，而`v-show`通过`css`样式切换来控制)
 * `v-else-if`
 * `v-else`
 * `v-show`:隐藏元素 如果确定要隐藏，会给元素的`style`加上`display：none`。是基于`css`样式切换
@@ -48,6 +92,18 @@ var app = new Vue({
 * `v-for`:遍历
 * `v-model`:双向绑定，有`value`属性就能绑定
 * **如果做form表单，绝对不能用display**
+
+`v-text`指令,使用方式：
+
+```
+<p v-text="内容"></p>
+```
+
+`v-if`指令，使用方式:
+
+```
+<div v-if='true'>内容</div>
+```
 
 `v-bind`指令,绑定`class`属性：
 
@@ -93,7 +149,7 @@ template:'
 ```
 
 ```
-method:{
+methods:{
     clickHandler(e) {
         // TODO...
     }
@@ -146,7 +202,7 @@ data() {
 
 ## Vue-双向数据绑定
 
-`v-model`: 双向数据绑定的体现，**只能应用在有value属性的**
+`v-model`: 双向数据绑定的体现，**只能应用在有value属性的UI控件中**
 
 语法糖：它是`v-bind:value` 和 `v-on:input`的体现
 
