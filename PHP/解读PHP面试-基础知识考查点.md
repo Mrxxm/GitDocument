@@ -1,6 +1,8 @@
+
 ## 基础知识考查点
 
 ### PHP引用变量考察点(上)
+---
 
 #### 概念
 
@@ -48,6 +50,7 @@ COW：是优化内存的一种手段，是的值相同的变量可以共用同�
 用不同的名字访问相同的变量内容，不存在`COW`机制。
 
 ### PHP引用变量考察点(下)
+---
 
 #### `unset()` 
 
@@ -137,6 +140,7 @@ $value = &$data['2'];
 ```
 
 ### 常量及数据类型考察点
+---
 
 #### 真题回顾
 
@@ -292,6 +296,7 @@ Path: `$_SERVER['PHP_SELF'];`
 
 
 ### 运算符知识点考察点
+---
 
 #### 回顾真题
 
@@ -406,7 +411,7 @@ $b = 0++;
 
 
 ### 流程控制考察点
-
+---
 
 请列出3种PHP循环数组操作的语法，并注明各种循环的区别？
 
@@ -477,6 +482,7 @@ switch($var){
 
 
 ### 自定义函数及内部函数考察点（上）
+---
 
 #### 真题回顾
 
@@ -549,6 +555,7 @@ function myFunc()
 
 
 ### 自定义函数及内部函数考察点（下）
+---
 
 #### 延伸考点：函数的返回值
 
@@ -666,6 +673,7 @@ IP处理函数：
 * `sort();` 排序
 
 ### 正则表达式考察知识点
+---
 
 至少写出一种验证139开头的11位手机号码的正则表达式？
 
@@ -861,6 +869,7 @@ var_dump($match); // 123.456
 ```
 
 ### 文件及目录处理考点
+---
 
 不断在文件 `hello.txt` 头部写入一行 `“Hello World”`字符串，要求代码完整？
 
@@ -1011,12 +1020,458 @@ var_dump($match); // 123.456
 * `rewind()`
 
 
+#### 真题解析
+
+```
+// 打开文件
+
+// 将文件的内容读取出来，在开头加入Hello World
+
+// 将拼接好的字符串写回到文件当中
+
+$file = './hello.txt';
+
+$handle = fopen($file, 'r');
+
+$content = fread($handle, filesize($file));
+
+$content = 'Hello World' . $content;
+
+fclose($handle);
+
+$handle = fopen($file, 'w');
+
+fwrite($handle, $content);
+
+fclose($handle);
+```
+
+直接用`r+`模式，会将原来位置上的数值替换掉。
+
+#### 一网打尽
+
+通过PHP函数的方式对目录进行遍历，写出程序。
+
+```
+ <?php
+ 
+ $dir = './test';
+ 
+ // 打开目录
+ // 读取目录当中的文件
+ // 如果文件类型是目录，继续打开目录
+ // 读取子目录的文件
+ // 如果文件类型是文件，输出文件名称
+ // 关闭目录
+ 
+ function loopDir($dir)
+ {
+    $handle = opendir($dir);
+    
+    while(false !== ($file = readdir($handle)))
+    {
+        echo $file . "\n";
+        if (filetype($dir. '/' .$file) == 'dir')
+        {
+            loopDir($dir . '/' . $file);
+        }
+    }
+ }
+```
 
 
+### 会话控制考点
+
+---
+
+简述`cookie`和`session`的区别及各自的工作机制，存储位置等，简述`cookie`的优缺点？
+
+考官考点：
+
+PHP的会话控制技术。
+
+#### 会话控制技术
+
+`Cookie`：
+
+它是一种由服务器发送给客户端的片段信息，存储在客户端浏览器的内存或者是硬盘中的技术。
+
+Cookie操作：
+
+添加：`setcookie($name, $value, $expire, $path, $domian, $secure);`
+
+读取:`$_COOKIE`
+
+删除:`setcookie($name, '', time()-1);`
+
+Cookie的优点缺点:
+
+1.存储在客户端，不会占用服务器资源。
+
+2.由于信息存储在客户端，不建议将敏感信息保存在cookie当中。
+
+3.用户可以在客户端禁止cookie的使用。
+
+`Session`：
+
+将用户的信息存储在服务器中，这样用户就不能禁用掉session的使用。session并没有完全脱离cookie，在cookie中会保存`session_id`。
+
+session的操作：
+
+```
+session_start();
+
+$_SESSION;
+
+// 清空
+$_SESSION = [];
+
+// 销毁，并删除session_id
+session_destroy();
+```
+
+session的配置：
+
+`php.ini`
+
+```
+session.auto_start
+session.cookie_domain
+session.cookie_lifetime
+session.cookie_path
+session.name
+session.save_path
+session.use_cookies
+session.use_trans_sid
+// 垃圾回收♻️
+session.gc_probability = 1
+session.gc_divisor = 100
+session.gc_maxlifetime = 1440
+
+// session存储的句柄
+session.save_handle 
+```
+
+session的优点缺点：
+
+1.信息比较安全
+
+2.占用服务器的资源
+
+传递`SessionID`的问题：
+
+`session_name()`和`session_id()`。
+
+```
+<a href="1.php?PHPSESSIONID=sessid的值">下一个页面</a>
+
+<a href="1.php?<?php echo session_name() . '=' . session_id(); ?>">下一个页面</a>
+```
+
+`SID`常量：
+
+如果开启了`cookie`,那么这个常量为空，没有禁用`cookie`,`SID`为`session_name()`和`session_id()`的拼接。
+
+```
+<a href="1.php?<?php echo SID; ?>">下一个页面</a>
+```
+
+session存储:
+
+存储在多台web服务器上。
+
+解决办法：不再以文件的方式存储session，可以存储到内存服务器上。
+
+`session_set_save_handle()`
+
+`Mysql`、`Memcache`、`Redis`等。
 
 
+#### 一网打尽
 
+`Session`信息的存储方式，如何进行遍历？
 
+默认以文件方式存储在服务器。直接遍历`$_SESSION`这个数组。
 
+### 面向对象考点
 
+---
 
+请写出PHP类权限控制修饰符？
+
+考官考点：
+
+PHP类权限控制修饰符。
+
+延伸：面向对象的封装、继承和多态。
+
+延伸：魔术方法。
+
+延伸：设计模式。
+
+#### PHP类权限控制修饰符
+
+* `public`：类的内部，外部使用，子类中使用
+
+* `protected`：类的内部使用，子类中使用
+
+* `private`：类的内部使用
+
+#### 延伸考点：面向对象的封装
+
+成员访问权限。
+
+#### 延伸考点：面向对象的继承
+
+单一继承。
+
+方法重写。
+
+方法重写：
+
+```
+Class Father
+{
+    public function test(){
+    
+    }
+}
+
+Class Son extends Father
+{
+    public function test(){
+        parent::test();
+        ...
+    }
+}
+```
+
+#### 延伸考点：面向对象的多态
+
+抽象类的定义。类中有抽象方法，那么类一定为抽象类。
+
+接口里面的方法都是抽象的。
+
+**接口和抽象类的区别**：
+
+* 抽象类可以有构造方法，接口中不能有构造方法。
+
+* 抽象类中可以有普通成员变量，接口中没有普通成员变量。
+
+* 抽象类中可以包含静态方法，接口中不能包含静态方法。
+
+* 接口可以被多重实现，抽象类只能被单一继承。
+
+**接口和抽象类的相同点**：
+
+* 都可以被继承。
+
+* 都不能被实例化。
+
+* 都可以包含方法声明。
+
+* 派生类必须实现未实现的方法。
+
+延伸考点：魔术方法
+
+* `__construct()`
+
+* `__destruct()`
+
+* `__call()`
+
+* `__callStatic()`
+
+* `__get()`
+
+* `__set()`
+
+* `__isset()`
+
+* `__unset()`
+
+* `__sleep()`
+
+* `__wakeup()`
+
+* `__toString()`
+
+* `__clone()`
+
+#### 延伸考点：设计模式
+
+常见的设计模式：工厂模式、单例模式、注册树模式、适配器模式、观察者模式和策略模式。
+
+### 网络协议考察点
+
+---
+
+HTTP/1.1中，状态码 200 301 304 403 404 500 的含义？
+
+考官考点：
+
+HTTP协议状态码内容。
+
+延伸：OSI七层模型。
+
+延伸：HTTP协议的工作特点和工作原理。
+
+延伸：HTTP协议常见请求/响应头和请求方法。
+
+延伸：HTTPS协议的工作原理。
+
+延伸：常见网络协议含义及端口。
+
+#### HTTP协议状态码
+
+* `1XX`：接收请求正在处理
+
+* `2XX`：请求正常处理完毕
+
+* `3XX`：重定向
+
+* `4XX`：客户端错误，服务器无法处理请求
+
+* `5XX`：服务器处理请求出错
+
+常见错误状态码：
+
+* `200`：`OK`
+
+* `204`：`NO content` - `Response`中包含一些`Header`和一个状态行， 但不包括实体的主题内容。
+
+* `206`：`part content` - 部分请求成功。
+
+* `301`：`Moved Permanently`（永久移除) - 请求的`URL`已移走。`Response`中应该包含一个`Location URL`, 说明资源现在所处的位置。
+
+* `302`：`Found`（已找到）- 与状态码`301`类似。但这里的移除是临时的。 客户端会使用`Location`中给出的`URL`，重新发送新的`HTTP request`。
+
+* `303`：`See Other`（参见其他）- 类似`302`。
+
+* `304`：`Not Modified`（未修改）- 客户的缓存资源是最新的，要客户端使用缓存。
+
+* `307`：`Temporary Redirect`（临时重定向）- 类似`302`。
+
+* `400`：`Bad Request`（坏请求）- 告诉客户端，它发送了一个错误的请求。
+
+* `401`：`Unauthorized`（未授权）- 需要客户端对自己认证。
+
+* `403`：`Forbidden`（禁止）- 请求被服务器拒绝了。
+
+* `404`：`Not Found`（未找到）- 未找到资源。
+
+* `500`：`Internal Server Error`(内部服务器错误) - 服务器遇到一个错误，使其无法为请求提供服务。
+
+* `502`：`Bad Gateway`（网关故障）- 代理使用的服务器遇到了上游的无效响应。
+
+* `503`：`Service Unavailable`（未提供此服务）- 服务器目前无法为请求提供服务，但过一段时间就可以恢复服务。
+
+#### 延伸考点：OSI七层模型
+
+#### 延伸考点：HTTP协议的工作特点和工作原理
+
+工作特点：
+
+基于B/S模式。
+
+通信开销小、简单快速、传输成本低。
+
+使用灵活、可使用超文本传输协议。
+
+节省传输时间。
+
+无状态。
+
+工作原理：
+
+客户端发送请求给服务器，创建一个TCP连接，指定端口号，默认80，连接到服务器，服务器监听浏览器请求，一旦监听到客户端请求，分析请求类型后，服务器会向客户端返回状态信息和数据内容。
+
+延伸考点：HTTP协议的请求方法
+
+* `GET`：读取（`Read`）- 200 OK
+
+* `POST`：新建（`Create`）- 201 Created
+
+* `PUT`：更新（`Update`）- 200 OK
+
+* `PATCH`：更新（`Update`），通常是部分更新 - 200 OK
+
+* `DELETE`：删除（`Delete`）- 204 No Content
+
+* `HEAD`：向服务器发送信息，返回只有`header`信息
+
+* `OPTIONS`：客户端查看服务器性能，返回该资源所支持的HTTP协议所有请求方法，该方法会用`*`来代替资源名称
+
+* `TRACE`：请求服务器，返回信息。多用于请求测试。
+
+HTTP协议的GET和POST请求方法的区别：
+
+* 后退操作时，GET是无害的，而POST将会被重新提交。
+
+* GET可以被浏览器缓存，POST不能被浏览器缓存。
+
+* GET请求URL长度受限制2048个字符，POST是没有限制的。
+
+* GET的安全性较差。
+
+#### 延伸考点:HTTPS的工作原理
+
+HTTPS是一种基于SSL/TLS的HTTP协议，所有的HTTP数据都是在SSL/TLS协议封装之上传输的。
+
+HTTPS协议在HTTP协议的基础上，添加了SSL/TLS握手以及数据加密传输，也属于应用层协议。
+
+#### 延伸考点:常见的网络协议含义及端口
+
+* `FTP`：文件传输协议 21
+
+* `Telnet`：远程登录 23
+
+* `SMTP`：简单邮件传输协议 25
+
+* `POP3`：和SMTP对应，用于接收邮件 110
+
+* `HTTP`：80
+
+* `DNS`：域名解析 53
+
+### 开发环境及配置相关考点
+
+---
+
+#### 版本控制软件
+
+集中式和分布式：
+
+* `SVN/CVS`  
+
+* `Git`
+
+#### 延伸考点：PHP的运行原理
+
+`CGI`：通用网关协议。
+
+`FastCGI`：`FastCGI`像是一个常驻型的`CGI`，它可以一直执行着，只要激活后，不会每次都要花费时间去`fork`一次（这是`CGI`最为人诟病的`fork-and-execute` 模式）。它还支持分布式的运算，即`FastCGI`程序可以在网站服务器以外的主机上执行并且接受来自其它网站服务器来的请求。
+
+`PHP-FPH`：`FastCGI`的进程管理器。
+
+#### 延伸考点：PHP常见配置项
+
+* `register_globals`：注册全局变量，建议一直关闭
+
+* `allow_url_fopen`：允许远程文件打开
+
+* `allow_url_include`：允许远程文件包含
+
+* `date.timezone`：时区
+
+* `display_errors`：开发环境下，开启
+
+* `error_reporting`：显示错误的级别设置
+
+* `safe_mode`：安全模式
+
+* `upload_max_filesize`：上传的最大文件大小
+
+* `max_file_uploads`：上传最大文件数量
+
+* `post_max_size`：提交的post数据最大大小
