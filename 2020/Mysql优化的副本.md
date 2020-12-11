@@ -57,15 +57,15 @@ mysql> show variables like 'long_query_time';
   1.重启服务(`for mac`)
 
   ```
-➜  / cd /usr/local/mysql/support-files
-➜  support-files sudo mysql.server
-Usage: mysql.server  {start|stop|restart|reload|force-reload|status}  [ MySQL server options ]
-➜  support-files sudo mysql.server restart
-Shutting down MySQL
-.. SUCCESS!
-Starting MySQL
-. SUCCESS!
-```
+	➜  / cd /usr/local/mysql/support-files
+	➜  support-files sudo mysql.server
+	Usage: mysql.server  {start|stop|restart|reload|force-reload|status}  [ MySQL server options ]
+	➜  support-files sudo mysql.server restart
+	Shutting down MySQL
+	.. SUCCESS!
+	Starting MySQL
+	. SUCCESS!
+  ```
 
   2.查看相关配置，并动态设定
 
